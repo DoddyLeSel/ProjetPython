@@ -2,7 +2,7 @@ import pygame
 import random
 
 from unit import *
-
+from jett import *
 
 class Game:
     """
@@ -30,7 +30,7 @@ class Game:
         """
         self.screen = screen
         self.player_units = [Unit(0, 0, 10, 2, 'player'),
-                             Unit(1, 0, 10, 2, 'player')]
+                             Jett(1, 0, 'player')]
 
         self.enemy_units = [Unit(6, 6, 8, 1, 'enemy'),
                             Unit(7, 6, 8, 1, 'enemy')]
