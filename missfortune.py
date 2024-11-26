@@ -2,7 +2,7 @@ import pygame
 
 from unit import *
 
-class Warwick(Unit):
+class MissFortune(Unit):
     
     def __init__(self, x, y, team):
         
@@ -15,7 +15,7 @@ class Warwick(Unit):
     def draw(self, screen):
         """Affiche l'unité sur l'écran."""
         
-        image = pygame.image.load("Warwick.png").convert_alpha()
+        image = pygame.image.load("MissFortune.png").convert_alpha()
         image = pygame.transform.scale(image,(CELL_SIZE, CELL_SIZE))
         
         if self.is_selected:
