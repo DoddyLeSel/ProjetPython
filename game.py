@@ -15,10 +15,10 @@ class Game:
     ---------
     screen: pygame.Surface
         La surface de la fenêtre du jeu.
-    player_units : list[Unit]
-        La liste des unités du joueur.
-    enemy_units : list[Unit]
-        La liste des unités de l'adversaire.
+    player_1_units : list[Unit]
+        La liste des unités du joueur 1.
+    player_2_units : list[Unit]
+        La liste des unités du joueur 2.
     """
 
     def __init__(self, screen):
@@ -31,100 +31,64 @@ class Game:
             La surface de la fenêtre du jeu.
         """
         self.screen = screen
-        self.player_units = [Warwick(6, 1, 'player'), Xerath(7,1, 'player'), MissFortune(8,1, 'player')]
+        self.player_1_units = [Warwick(6, 1, 'player'), Xerath(7,1, 'player'), MissFortune(8,1, 'player')]
 
-        self.enemy_units = [Warwick(6, 13, 'player'), Xerath(7,13, 'player'), MissFortune(8,13, 'player')]
+        self.player_2_units = [Warwick(6, 13, 'player'), Xerath(7,13, 'player'), MissFortune(8,13, 'player')]
 
-    def handle_player_turn(self):
+    def handle_turn(self):
         """Tour du joueur"""
-        for selected_unit in self.player_units :
+        #Tour du joueur 1 puis tour du joueur 2
+        for i in [0,1]:
+            player_list = [self.player_1_units, self.player_2_units]
+            for selected_unit in player_list[i] :
 
-            # Tant que l'unité n'a pas terminé son tour
-            has_acted = False
-            selected_unit.is_selected = True
-            self.flip_display()
-            while not has_acted:
+                # Tant que l'unité n'a pas terminé son tour
+                has_acted = False
+                selected_unit.is_selected = True
+                self.flip_display()
+                while not has_acted:
 
-                # Important: cette boucle permet de gérer les événements Pygame
-                for event in pygame.event.get():
+                    # Important: cette boucle permet de gérer les événements Pygame
+                    for event in pygame.event.get():
 
-                    # Gestion de la fermeture de la fenêtre
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        exit()
+                        # Gestion de la fermeture de la fenêtre
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            exit()
 
-                    # Gestion des touches du clavier
-                    if event.type == pygame.KEYDOWN:
+                        # Gestion des touches du clavier
+                        if event.type == pygame.KEYDOWN:
 
-                        # Déplacement (touches fléchées)
-                        dx, dy = 0, 0
-                        if event.key == pygame.K_LEFT:
-                            dx = -1
-                        elif event.key == pygame.K_RIGHT:
-                            dx = 1
-                        elif event.key == pygame.K_UP:
-                            dy = -1
-                        elif event.key == pygame.K_DOWN:
-                            dy = 1
+                            # Déplacement (touches fléchées)
+                            dx, dy = 0, 0
+                            if event.key == pygame.K_LEFT:
+                                dx = -1
+                            elif event.key == pygame.K_RIGHT:
+                                dx = 1
+                            elif event.key == pygame.K_UP:
+                                dy = -1
+                            elif event.key == pygame.K_DOWN:
+                                dy = 1
 
-                        selected_unit.move(dx, dy)
-                        self.flip_display()
+                            selected_unit.move(dx, dy)
+                            self.flip_display()
 
-                        # Attaque (touche espace) met fin au tour
-                        if event.key == pygame.K_SPACE:
-                            for enemy in self.enemy_units:
-                                if abs(selected_unit.x - enemy.x) <= 1 and abs(selected_unit.y - enemy.y) <= 1:
-                                    selected_unit.attack(enemy)
-                                    if enemy.health <= 0:
-                                        self.enemy_units.remove(enemy)
+                            # Attaque (touche espace) met fin au tour
+                            if event.key == pygame.K_SPACE:
+                                
+                                if i + 1 == 2:
+                                    c=0
+                                else:
+                                    c=i+1
+                                    
+                                for enemy in player_list[c]:
+                                    if abs(selected_unit.x - enemy.x) <= 1 and abs(selected_unit.y - enemy.y) <= 1:
+                                        selected_unit.attack(enemy)
+                                        if enemy.health <= 0:
+                                            player_list[c].remove(enemy)
 
-                            has_acted = True
-                            selected_unit.is_selected = False
-
-    def handle_enemy_turn(self):
-        """Tour du joueur"""
-        for selected_unit in self.enemy_units:
-            has_acted = False
-            selected_unit.is_selected = True
-            self.flip_display()
-            while not has_acted:
-
-                # Important: cette boucle permet de gérer les événements Pygame
-                for event in pygame.event.get():
-
-                    # Gestion de la fermeture de la fenêtre
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        exit()
-
-                    # Gestion des touches du clavier
-                    if event.type == pygame.KEYDOWN:
-
-                        # Déplacement (touches fléchées)
-                        dx, dy = 0, 0
-                        if event.key == pygame.K_LEFT:
-                            dx = -1
-                        elif event.key == pygame.K_RIGHT:
-                            dx = 1
-                        elif event.key == pygame.K_UP:
-                            dy = -1
-                        elif event.key == pygame.K_DOWN:
-                            dy = 1
-
-                        selected_unit.move(dx, dy)
-                        self.flip_display()
-
-                        # Attaque (touche espace) met fin au tour
-                        if event.key == pygame.K_SPACE:
-                            for player in self.player_units:
-                                if abs(selected_unit.x - player.x) <= 1 and abs(selected_unit.y - player.y) <= 1:
-                                    selected_unit.attack(player)
-                                    if player.health <= 0:
-                                        self.player_units.remove(player)
-
-                            has_acted = True
-                            selected_unit.is_selected = False
-
+                                has_acted = True
+                                selected_unit.is_selected = False
 
     def flip_display(self):
         """Affiche le jeu."""
@@ -137,7 +101,7 @@ class Game:
                 pygame.draw.rect(self.screen, WHITE, rect, 1)
 
         # Affiche les unités
-        for unit in self.player_units + self.enemy_units:
+        for unit in self.player_1_units + self.player_2_units:
             unit.draw(self.screen)
 
         # Rafraîchit l'écran
@@ -156,10 +120,9 @@ def main():
     # Instanciation du jeu
     game = Game(screen)
 
-    # Boucle principale du jeu
+    # Boucle principale du jeu, un tour comprend les 2 joueurs
     while True:
-        game.handle_player_turn()
-        game.handle_enemy_turn()
+        game.handle_turn()
 
 
 if __name__ == "__main__":

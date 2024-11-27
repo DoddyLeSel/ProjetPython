@@ -24,3 +24,4 @@ class Xerath(Unit):
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
     def skill_1(self):
+        pass

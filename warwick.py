@@ -24,3 +24,13 @@ class Warwick(Unit):
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
     def skill_1(self):
+        
+        range = 1
+        positions=[]
+        for i in range(range):
+            position += [(self.x + i, self.y),
+                         (self.x - i, self.y),
+                         (self.x, self.y + i),
+                         (self.x, self.y - i)]
+        
+        
