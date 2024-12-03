@@ -8,8 +8,9 @@ class Warwick(Unit):
         
         VIE = 100
         DAMAGE = 20
+        VIE_MAX = 100
         
-        super().__init__(x, y, VIE, DAMAGE, team)   #Hérite de la classe Unit
+        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, team)   #Hérite de la classe Unit
         
         
     def draw(self, screen):
@@ -23,14 +24,19 @@ class Warwick(Unit):
                              self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
-    def skill_1(self):
+    def skill_1(self,screen):
         
-        range = 1
-        positions=[]
-        for i in range(range):
-            position += [(self.x + i, self.y),
+        portee = 1
+        positions = []
+        for i in range(1,portee +1):
+            positions += [(self.x + i, self.y),
                          (self.x - i, self.y),
                          (self.x, self.y + i),
                          (self.x, self.y - i)]
+            
+        self.afficher_position(screen,positions)
+            
+        
+        
         
         

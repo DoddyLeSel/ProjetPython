@@ -44,7 +44,7 @@ class Unit:
         Dessine l'unité sur la grille.
     """
 
-    def __init__(self, x, y, health, attack_power, team):
+    def __init__(self, x, y, health, max_health, attack_power, team):
         """
         Construit une unité avec une position, une santé, une puissance d'attaque et une équipe.
 
@@ -64,6 +64,7 @@ class Unit:
         self.x = x
         self.y = y
         self.health = health
+        self.max_health = max_health
         self.attack_power = attack_power
         self.team = team  # 'player' ou 'enemy'
         self.is_selected = False
@@ -88,3 +89,12 @@ class Unit:
         pygame.draw.circle(screen, color, (self.x * CELL_SIZE + CELL_SIZE //
                            2, self.y * CELL_SIZE + CELL_SIZE // 2), CELL_SIZE // 3)
  
+    def afficher_position(self,screen,positions):
+        """Affiche les positions possible pour la compétence"""
+        for pos in positions :
+            pygame.draw.rect(screen, BLUE, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+        pygame.display.flip()
+            
+            
+            

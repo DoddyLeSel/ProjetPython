@@ -8,8 +8,9 @@ class MissFortune(Unit):
         
         VIE = 100
         DAMAGE = 20
+        VIE_MAX = 100
         
-        super().__init__(x, y, VIE, DAMAGE, team)   #Hérite de la classe Unit
+        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, team)   #Hérite de la classe Unit
         
         
     def draw(self, screen):
@@ -23,5 +24,5 @@ class MissFortune(Unit):
                              self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
-    def skill_1(self):
+    def skill_1(self,screen):
         pass

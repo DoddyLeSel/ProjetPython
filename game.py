@@ -89,6 +89,10 @@ class Game:
 
                                 has_acted = True
                                 selected_unit.is_selected = False
+                            
+                            if event.key == pygame.K_a :
+                                selected_unit.skill_1(self.screen)
+                                
 
     def flip_display(self):
         """Affiche le jeu."""
@@ -115,7 +119,7 @@ def main():
 
     # Instanciation de la fenêtre
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Mon jeu de stratégie")
+    pygame.display.set_caption("League Of Legends")
 
     # Instanciation du jeu
     game = Game(screen)
