@@ -25,4 +25,14 @@ class Xerath(Unit):
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
     def skill_1(self,screen):
-        pass
+        #Compétence :
+        nom = ""
+        portee = 5
+        positions = []
+        for i in range(1,portee +1):
+            positions += [(self.x + i, self.y),
+                         (self.x - i, self.y),
+                         (self.x, self.y + i),
+                         (self.x, self.y - i)]
+            
+        self.afficher_position(screen,positions, BLUE)

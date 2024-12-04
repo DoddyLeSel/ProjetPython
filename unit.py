@@ -1,22 +1,12 @@
 import pygame
 import random
+from constante import *
+from abc import ABC, abstractmethod
+from cursor import *
 
-# Constantes
-GRID_SIZE = 15
-CELL_SIZE = 60
-WIDTH = GRID_SIZE * CELL_SIZE
-HEIGHT = GRID_SIZE * CELL_SIZE
-FPS = 30
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
-GREEN = (0, 255, 0)
-
-
-class Unit:
+class Unit(ABC):
     """
-    Classe pour représenter une unité.
+    Classe abstraite pour représenter une unité.
 
     ...
     Attributs
@@ -81,20 +71,14 @@ class Unit:
             target.health -= self.attack_power
 
     def draw(self, screen):
-        """Affiche l'unité sur l'écran."""
-        color = BLUE if self.team == 'player' else RED
-        if self.is_selected:
-            pygame.draw.rect(screen, GREEN, (self.x * CELL_SIZE,
-                             self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-        pygame.draw.circle(screen, color, (self.x * CELL_SIZE + CELL_SIZE //
-                           2, self.y * CELL_SIZE + CELL_SIZE // 2), CELL_SIZE // 3)
+        pass
  
-    def afficher_position(self,screen,positions):
+    def afficher_position(self,screen,positions,color):
         """Affiche les positions possible pour la compétence"""
         for pos in positions :
-            pygame.draw.rect(screen, BLUE, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            pygame.draw.rect(screen, color, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
             pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
-        pygame.display.flip()
-            
-            
-            
+        pygame.display.flip()  
+        
+    def skill_1(self):
+        pass

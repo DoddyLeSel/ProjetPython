@@ -25,7 +25,8 @@ class Warwick(Unit):
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
     def skill_1(self,screen):
-        
+        #Compétence : Morsure, attaque à 1 case de distance et rend de la vie
+        nom = "Morsure"
         portee = 1
         positions = []
         for i in range(1,portee +1):
@@ -34,9 +35,8 @@ class Warwick(Unit):
                          (self.x, self.y + i),
                          (self.x, self.y - i)]
             
-        self.afficher_position(screen,positions)
-            
+        self.afficher_position(screen,positions, BLUE)
         
-        
-        
+        cursor=Cursor(self.x, self.y,RED)
+        cursor.move_cursor(screen)
         
