@@ -33,9 +33,9 @@ class Game:
             La surface de la fenêtre du jeu.
         """
         self.screen = screen
-        self.player_1_units = [Warwick(6, 1, 'player'), Xerath(7,1, 'player'), MissFortune(8,1, 'player')]
+        self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
-        self.player_2_units = [Warwick(6, 13, 'player'), Xerath(7,13, 'player'), MissFortune(8,13, 'player')]
+        self.player_2_units = [Warwick(6, 13, 'player_2'), Xerath(7,13, 'player_2'), MissFortune(8,13, 'player_2')]
 
     def handle_turn(self):
         """Tour du joueur"""
@@ -95,7 +95,7 @@ class Game:
                             if event.key == pygame.K_a :
                                 
                                 selected_unit.skill_1(self.screen)
-                                
+                                self.flip_display()
 
     def flip_display(self):
         """Affiche le jeu."""
@@ -109,6 +109,10 @@ class Game:
 
         # Affiche les unités
         for unit in self.player_1_units + self.player_2_units:
+            if unit.team == 'player_1':
+                pygame.draw.rect(self.screen, GREEN, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            else :
+                pygame.draw.rect(self.screen, RED, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
             unit.draw(self.screen)
 
         # Rafraîchit l'écran

@@ -15,20 +15,19 @@ class Xerath(Unit):
         
     def draw(self, screen):
         """Affiche l'unité sur l'écran."""
-        
+            
         image = pygame.image.load("Xerath.png").convert_alpha()
         image = pygame.transform.scale(image,(CELL_SIZE, CELL_SIZE))
         
         if self.is_selected:
-            pygame.draw.rect(screen, GREEN, (self.x * CELL_SIZE,
-                             self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            pygame.draw.rect(screen, YELLOW, (self.x * CELL_SIZE,self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
     def skill_1(self,screen):
         #Compétence :
         nom = ""
         portee = 5
-        positions = []
+        positions = [(self.x, self.y)]
         for i in range(1,portee +1):
             positions += [(self.x + i, self.y),
                          (self.x - i, self.y),

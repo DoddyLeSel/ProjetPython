@@ -74,10 +74,11 @@ class Unit(ABC):
         pass
  
     def afficher_position(self,screen,positions,color):
-        """Affiche les positions possible pour la compétence"""
+        """Affiche les positions possibles pour la compétence"""
         for pos in positions :
-            pygame.draw.rect(screen, color, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-            pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+            if pos != (self.x,self.y):
+                pygame.draw.rect(screen, color, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
         pygame.display.flip()  
         
     def skill_1(self):
