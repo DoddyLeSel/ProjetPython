@@ -34,7 +34,7 @@ class Unit(ABC):
         Dessine l'unité sur la grille.
     """
 
-    def __init__(self, x, y, health, max_health, attack_power, team):
+    def __init__(self, x, y, health, max_health, attack_power, PM, team):
         """
         Construit une unité avec une position, une santé, une puissance d'attaque et une équipe.
 
@@ -56,6 +56,7 @@ class Unit(ABC):
         self.health = health
         self.max_health = max_health
         self.attack_power = attack_power
+        self.PM = PM
         self.team = team  # 'player' ou 'enemy'
         self.is_selected = False
 

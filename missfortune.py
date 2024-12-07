@@ -9,8 +9,9 @@ class MissFortune(Unit):
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
+        PM = 3
         
-        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, team)   #Hérite de la classe Unit
+        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, team)   #Hérite de la classe Unit
         
         
     def draw(self, screen):
@@ -23,7 +24,7 @@ class MissFortune(Unit):
             pygame.draw.rect(screen, YELLOW, (self.x * CELL_SIZE,self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
-    def skill_1(self,screen):
+    def skill_1(self,screen, l_unit_1, l_unit_2):
         #Compétence : 
         nom = ""
         portee = 3
@@ -36,4 +37,9 @@ class MissFortune(Unit):
         self.afficher_position(screen,positions, BLUE)
         
         cursor=Cursor(self.x, self.y,positions)
-        cursor.move_cursor(screen, self.x, self.y)
+        (x_cursor,y_cursor)=cursor.move_cursor(screen, self.x, self.y)
+        
+        for unit in l_unit_1 + l_unit_2 :
+            
+            if (unit.x, unit.y) == (x_cursor, y_cursor) and unit.team != self.team :
+                unit.health -= self.attack_power

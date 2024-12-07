@@ -9,8 +9,9 @@ class Xerath(Unit):
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
+        PM = 3
         
-        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, team)   #Hérite de la classe Unit
+        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, team)   #Hérite de la classe Unit
         
         
     def draw(self, screen):

@@ -9,8 +9,9 @@ class Warwick(Unit):
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
+        PM = 3
         
-        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, team)   #Hérite de la classe Unit
+        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, team)   #Hérite de la classe Unit
         
         
     def draw(self, screen):
@@ -23,7 +24,7 @@ class Warwick(Unit):
             pygame.draw.rect(screen, YELLOW, (self.x * CELL_SIZE,self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
         screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
 
-    def skill_1(self,screen):
+    def skill_1(self,screen, l_unit_1, l_unit_2):
         #Compétence : Morsure, attaque à 1 case de distance et rend de la vie
         nom = "Morsure"
         portee = 1
@@ -33,9 +34,20 @@ class Warwick(Unit):
                          (self.x - i, self.y),
                          (self.x, self.y + i),
                          (self.x, self.y - i)]
-            
+        heal = 10
+        
         self.afficher_position(screen,positions, BLUE)
         
         cursor=Cursor(self.x, self.y,positions)
-        cursor.move_cursor(screen, self.x, self.y)
+        (x_cursor,y_cursor)=cursor.move_cursor(screen, self.x, self.y)
+        
+        for unit in l_unit_1 + l_unit_2 :
+            
+            if (unit.x, unit.y) == (x_cursor, y_cursor) and unit.team != self.team :
+                unit.health -= self.attack_power
+                self.health += heal
+                
+                if self.health > self.max_health :
+                    self.health = self.max_health
+
         

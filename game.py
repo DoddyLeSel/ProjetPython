@@ -94,9 +94,17 @@ class Game:
                             
                             if event.key == pygame.K_a :
                                 
-                                selected_unit.skill_1(self.screen)
+                                selected_unit.skill_1(self.screen, self.player_1_units, self.player_2_units)
+                                
+                                for unit in self.player_1_units + self.player_2_units :
+                                    if unit.health <= 0 :
+                                        if unit.team == 'player_1' :
+                                            self.player_1_units.remove(unit)
+                                        else :
+                                            self.player_2_units.remove(unit)
+                                            
                                 self.flip_display()
-
+                                
     def flip_display(self):
         """Affiche le jeu."""
 
