@@ -53,6 +53,10 @@ class Unit(ABC):
         """
         self.x = x
         self.y = y
+        
+        self.x_PM = self.x   #coord des rectangles de selection
+        self.y_PM = self.y
+        
         self.health = health
         self.max_health = max_health
         self.attack_power = attack_power
@@ -60,19 +64,41 @@ class Unit(ABC):
         self.team = team  # 'player' ou 'enemy'
         self.is_selected = False
 
-    def move(self, dx, dy):
-        """Déplace l'unité de dx, dy."""
-        if 0 <= self.x + dx < GRID_SIZE and 0 <= self.y + dy < GRID_SIZE:
-            self.x += dx
-            self.y += dy
+    def move_PM(self, dx, dy, ENTREE):
+        """Déplace le carre de selection de dx, dy."""
+        if self.x - PM <= self.x_PM + dx <= self.x + PM and self.y - PM <= self.y_PM + dy <= self.y + PM and 0 <= self.x_PM + dx < GRID_SIZE and 0 <= self.y_PM + dy < GRID_SIZE and ENTREE ==0:
+        # on compare avec self.x - pm cad par rapport a la position du perso 
+            self.x_PM += dx
+            self.y_PM += dy
+    
+    
+    def move(self):
+        if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
+            self.x = self.x_PM   #la derniere coord du rect jaune
+            self.y = self.y_PM
+        
 
     def attack(self, target):
         """Attaque une unité cible."""
         if abs(self.x - target.x) <= 1 and abs(self.y - target.y) <= 1:
             target.health -= self.attack_power
 
-    def draw(self, screen):
+    def draw_PM (self, screen, ENTREE) : 
+        #dessiner les rect LIGHT_YELLOW (zone de mouvement possible)
+        if self.is_selected and ENTREE == 0: 
+            for i in range(self.x - PM, self.x + PM + 1):
+                for j in range(self.y - PM, self.y + PM + 1):
+                    # Vérifiez que les coordonnées sont valides dans la grille
+                    if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE:
+                        pygame.draw.rect(screen, LIGHT_YELLOW, (i * CELL_SIZE  , j * CELL_SIZE , CELL_SIZE -1 , CELL_SIZE -1)) #-1 pour garder les bordures blanches
+        
+            #dessiner le rect YELLOW (position actuelle)
+            pygame.draw.rect(screen, YELLOW, (self.x_PM * CELL_SIZE, self.y_PM * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+        
+        
+    def draw(self, screen, ENTREE):
         pass
+
  
     def afficher_position(self,screen,positions,color):
         """Affiche les positions possibles pour la compétence"""
