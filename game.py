@@ -22,7 +22,8 @@ class Game:
     player_2_units : list[Unit]
         La liste des unités du joueur 2.
     """
-
+    ENTREE = 0 #pour effacer les rect de selection une fois on appuie sur entree
+    
     def __init__(self, screen):
         """
         Construit le jeu avec la surface de la fenêtre.
@@ -48,6 +49,9 @@ class Game:
                 has_acted = False
                 selected_unit.is_selected = True
                 self.flip_display()
+                
+                
+                
                 while not has_acted:
 
                     # Important: cette boucle permet de gérer les événements Pygame
@@ -63,16 +67,22 @@ class Game:
 
                             # Déplacement (touches fléchées)
                             dx, dy = 0, 0
-                            if event.key == pygame.K_LEFT:
+                            if event.key == pygame.K_LEFT :
                                 dx = -1
-                            elif event.key == pygame.K_RIGHT:
+                            elif event.key == pygame.K_RIGHT :
                                 dx = 1
-                            elif event.key == pygame.K_UP:
+                            elif event.key == pygame.K_UP :
                                 dy = -1
-                            elif event.key == pygame.K_DOWN:
+                            elif event.key == pygame.K_DOWN :
                                 dy = 1
 
-                            selected_unit.move(dx, dy)
+                            selected_unit.move_PM(dx, dy, Game.ENTREE)  #change la valeur de xpm et ypm cad les coord du rect jaune
+                            
+                             
+                            if event.key == pygame.K_RETURN:  #on a choisie une poition
+                                selected_unit.move() #change la valeur des coord de x et y cad l image 
+                                Game.ENTREE += 1 #on a appuye sur entree
+                            
                             self.flip_display()
 
                             # Attaque (touche espace) met fin au tour
@@ -91,6 +101,7 @@ class Game:
 
                                 has_acted = True
                                 selected_unit.is_selected = False
+                                Game.ENTREE=0 #reenit ENTREE
                             
                             if event.key == pygame.K_a :
                                 
@@ -121,11 +132,12 @@ class Game:
                 pygame.draw.rect(self.screen, GREEN, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
             else :
                 pygame.draw.rect(self.screen, RED, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-            unit.draw(self.screen)
+            unit.draw(self.screen,Game.ENTREE)
+            #unit.draw_PM(self.screen)
+            
 
         # Rafraîchit l'écran
         pygame.display.flip()
-
 
 def main():
 
