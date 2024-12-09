@@ -17,11 +17,15 @@ class Warwick(Unit):
     def draw(self, screen, ENTREE): 
         """Affiche l'unité sur l'écran."""
     
+        # afficher les rectangles de selection
         self.draw_PM(screen, ENTREE)
+        
         # Afficher l'image de l'unité
         image = pygame.image.load("Warwick.png").convert_alpha()
         image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
         screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))
+        
+        self.draw_health_bar(screen) # dessiner la barre de sante
 
     def skill_1(self,screen, l_unit_1, l_unit_2):
         #Compétence : Morsure, attaque à 1 case de distance et rend de la vie
