@@ -98,7 +98,22 @@ class Unit(ABC):
         
     def draw(self, screen, ENTREE):
         pass
-
+    
+    def draw_health_bar(self, screen):
+        # dimensions 
+        bar_width = CELL_SIZE #largeur
+        bar_height = 5  # hauteur
+        x = self.x * CELL_SIZE
+        y = self.y * CELL_SIZE - bar_height - 2  # position de la barre (au-dessus du personnage)
+        
+        # calcul de la largeur de la barre verte 
+        actual_health = self.health / self.max_health
+        green_width = int(bar_width * actual_health)
+        
+        # dessiner la barre rouge 
+        pygame.draw.rect(screen, RED, (x, y, bar_width, bar_height))
+        # dessiner la barre verte
+        pygame.draw.rect(screen, GREEN, (x, y, green_width, bar_height))
  
     def afficher_position(self,screen,positions,color):
         """Affiche les positions possibles pour la compétence"""
