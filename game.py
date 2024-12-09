@@ -79,7 +79,7 @@ class Game:
                             selected_unit.move_PM(dx, dy, Game.ENTREE)  #change la valeur de xpm et ypm cad les coord du rect jaune
                             
                              
-                            if event.key == pygame.K_RETURN:  #on a choisie une poition
+                            if event.key == pygame.K_RETURN:  #on a choisie une position
                                 selected_unit.move() #change la valeur des coord de x et y cad l image 
                                 Game.ENTREE += 1 #on a appuye sur entree
                             
@@ -87,17 +87,6 @@ class Game:
 
                             # Attaque (touche espace) met fin au tour
                             if event.key == pygame.K_SPACE:
-                                
-                                if i + 1 == 2:
-                                    c=0
-                                else:
-                                    c=i+1
-                                    
-                                for enemy in player_list[c]:
-                                    if abs(selected_unit.x - enemy.x) <= 1 and abs(selected_unit.y - enemy.y) <= 1:
-                                        selected_unit.attack(enemy)
-                                        if enemy.health <= 0:
-                                            player_list[c].remove(enemy)
 
                                 has_acted = True
                                 selected_unit.is_selected = False

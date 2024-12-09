@@ -66,7 +66,7 @@ class Unit(ABC):
 
     def move_PM(self, dx, dy, ENTREE):
         """Déplace le carre de selection de dx, dy."""
-        if self.x - PM <= self.x_PM + dx <= self.x + PM and self.y - PM <= self.y_PM + dy <= self.y + PM and 0 <= self.x_PM + dx < GRID_SIZE and 0 <= self.y_PM + dy < GRID_SIZE and ENTREE ==0:
+        if self.x - self.PM <= self.x_PM + dx <= self.x + self.PM and self.y - self.PM <= self.y_PM + dy <= self.y + self.PM and 0 <= self.x_PM + dx < GRID_SIZE and 0 <= self.y_PM + dy < GRID_SIZE and ENTREE ==0:
         # on compare avec self.x - pm cad par rapport a la position du perso 
             self.x_PM += dx
             self.y_PM += dy
@@ -86,8 +86,8 @@ class Unit(ABC):
     def draw_PM (self, screen, ENTREE) : 
         #dessiner les rect LIGHT_YELLOW (zone de mouvement possible)
         if self.is_selected and ENTREE == 0: 
-            for i in range(self.x - PM, self.x + PM + 1):
-                for j in range(self.y - PM, self.y + PM + 1):
+            for i in range(self.x - self.PM, self.x + self.PM + 1):
+                for j in range(self.y - self.PM, self.y + self.PM + 1):
                     # Vérifiez que les coordonnées sont valides dans la grille
                     if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE:
                         pygame.draw.rect(screen, LIGHT_YELLOW, (i * CELL_SIZE  , j * CELL_SIZE , CELL_SIZE -1 , CELL_SIZE -1)) #-1 pour garder les bordures blanches

@@ -18,35 +18,34 @@ class Cursor:
             
                 if event.type == pygame.KEYDOWN:
                 
-                    if event.key == pygame.K_LEFT and (self.x-1, self.y) in self.positions:
+                    if event.key == pygame.K_LEFT and (self.x-1, self.y) in self.positions and 0 <= self.x-1 < GRID_SIZE and 0 <= self.y < GRID_SIZE:
                         if (self.x, self.y) != (x,y) :
-                            pygame.draw.rect(screen, self.color2, (self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                            pygame.draw.rect(screen, WHITE,(self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                            self.draw_cursor(screen, self.color2)
                         self.x += -1
                         
-                    elif event.key == pygame.K_RIGHT and (self.x+1, self.y) in self.positions:
+                    elif event.key == pygame.K_RIGHT and (self.x+1, self.y) in self.positions and 0 <= self.x+1 < GRID_SIZE and 0 <= self.y < GRID_SIZE:
                         if (self.x, self.y) != (x,y) :
-                            pygame.draw.rect(screen, self.color2, (self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                            pygame.draw.rect(screen, WHITE,(self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                            self.draw_cursor(screen, self.color2)
                         self.x += 1
                         
-                    elif event.key == pygame.K_UP and (self.x, self.y-1) in self.positions:
+                    elif event.key == pygame.K_UP and (self.x, self.y-1) in self.positions and 0 <= self.x < GRID_SIZE and 0 <= self.y-1 < GRID_SIZE:
                         if (self.x, self.y) != (x,y) :
-                            pygame.draw.rect(screen, self.color2, (self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                            pygame.draw.rect(screen, WHITE,(self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                            self.draw_cursor(screen, self.color2)
                         self.y += -1
                         
-                    elif event.key == pygame.K_DOWN and (self.x, self.y+1) in self.positions:
+                    elif event.key == pygame.K_DOWN and (self.x, self.y+1) in self.positions and 0 <= self.x < GRID_SIZE and 0 <= self.y+1 < GRID_SIZE:
                         if (self.x, self.y) != (x,y) :
-                            pygame.draw.rect(screen, self.color2, (self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                            pygame.draw.rect(screen, WHITE,(self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                            self.draw_cursor(screen, self.color2)
                         self.y += 1
                         
                     if (self.x, self.y) != (x,y) :
-                        pygame.draw.rect(screen, self.color, (self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                        pygame.draw.rect(screen, WHITE,(self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                        self.draw_cursor(screen, self.color)
                     
                     pygame.display.flip()
                 
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_RETURN:
                         return (self.x, self.y)
+                    
+    def draw_cursor(self, screen, color):
+        pygame.draw.rect(screen, color, (self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+        pygame.draw.rect(screen, WHITE,(self.x*CELL_SIZE, self.y*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)

@@ -9,7 +9,7 @@ class Warwick(Unit):
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
-        PM = 3
+        PM = 4
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, team)   #Hérite de la classe Unit
         
