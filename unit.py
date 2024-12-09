@@ -89,7 +89,7 @@ class Unit(ABC):
             for i in range(self.x - self.PM, self.x + self.PM + 1):
                 for j in range(self.y - self.PM, self.y + self.PM + 1):
                     # Vérifiez que les coordonnées sont valides dans la grille
-                    if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE:
+                    if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE :
                         pygame.draw.rect(screen, LIGHT_YELLOW, (i * CELL_SIZE  , j * CELL_SIZE , CELL_SIZE -1 , CELL_SIZE -1)) #-1 pour garder les bordures blanches
         
             #dessiner le rect YELLOW (position actuelle)
