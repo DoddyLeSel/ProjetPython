@@ -14,15 +14,14 @@ class MissFortune(Unit):
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, team)   #Hérite de la classe Unit
         
         
-    def draw(self, screen):
+    def draw(self, screen, ENTREE): 
         """Affiche l'unité sur l'écran."""
-            
+    
+        self.draw_PM(screen, ENTREE)
+        # Afficher l'image de l'unité
         image = pygame.image.load("MissFortune.png").convert_alpha()
-        image = pygame.transform.scale(image,(CELL_SIZE, CELL_SIZE))
-        
-        if self.is_selected:
-            pygame.draw.rect(screen, YELLOW, (self.x * CELL_SIZE,self.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-        screen.blit(image,(self.x * CELL_SIZE, self.y * CELL_SIZE))
+        image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
+        screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))
 
     def skill_1(self,screen, l_unit_1, l_unit_2):
         #Compétence : 
