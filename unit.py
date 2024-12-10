@@ -63,6 +63,7 @@ class Unit(ABC):
         self.PM = PM
         self.team = team  # 'player' ou 'enemy'
         self.is_selected = False
+        self.skill_used = False
 
     def move_PM(self, dx, dy, ENTREE):
         """Déplace le carre de selection de dx, dy."""
@@ -89,7 +90,7 @@ class Unit(ABC):
             for i in range(self.x - self.PM, self.x + self.PM + 1):
                 for j in range(self.y - self.PM, self.y + self.PM + 1):
                     # Vérifiez que les coordonnées sont valides dans la grille
-                    if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE :
+                    if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE and (i,j) != (self.x,self.y):
                         pygame.draw.rect(screen, LIGHT_YELLOW, (i * CELL_SIZE  , j * CELL_SIZE , CELL_SIZE -1 , CELL_SIZE -1)) #-1 pour garder les bordures blanches
         
             #dessiner le rect YELLOW (position actuelle)

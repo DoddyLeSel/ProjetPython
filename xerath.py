@@ -27,23 +27,23 @@ class Xerath(Unit):
         
         self.draw_health_bar(screen)
 
-    def skill_1(self, screen, l_unit_1, l_unit_2):
+    def skill_1(self, game):
         #Compétence :
         nom = ""
         portee = 5
+        
         positions = [(self.x, self.y)]
-        for i in range(1,portee +1):
-            positions += [(self.x + i, self.y),
-                         (self.x - i, self.y),
-                         (self.x, self.y + i),
-                         (self.x, self.y - i)]
-            
-        self.afficher_position(screen,positions, BLUE)
+        for i in range(-portee,portee +1):
+            for j in range(-portee,portee +1):
+                if abs(j) + abs(i) <= portee and (i,j) != (0,0):
+                    positions += [(self.x + i, self.y + j)]
         
-        cursor=Cursor(self.x, self.y,positions)
-        (x_cursor,y_cursor)=cursor.move_cursor(screen, self.x, self.y)
+        zone = [(0,0),(0,1),(1,0),(0,-1),(-1,0)]
         
-        for unit in l_unit_1 + l_unit_2 :
+        cursor = Cursor(self.x, self.y,positions, zone=zone)
+        list_cursor = cursor.move_cursor(self.x, self.y, game)
+        
+        for unit in game.player_1_units + game.player_2_units :
             
-            if (unit.x, unit.y) == (x_cursor, y_cursor) and unit.team != self.team :
+            if (unit.x, unit.y) in list_cursor and unit.team != self.team :
                 unit.health -= self.attack_power

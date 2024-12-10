@@ -48,9 +48,8 @@ class Game:
                 # Tant que l'unité n'a pas terminé son tour
                 has_acted = False
                 selected_unit.is_selected = True
+                selected_unit.skill_used = False
                 self.flip_display()
-                
-                
                 
                 while not has_acted:
 
@@ -92,9 +91,9 @@ class Game:
                                 selected_unit.is_selected = False
                                 Game.ENTREE=0 #reenit ENTREE
                             
-                            if event.key == pygame.K_a :
+                            if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_1(self.screen, self.player_1_units, self.player_2_units)
+                                selected_unit.skill_1(self)
                                 
                                 for unit in self.player_1_units + self.player_2_units :
                                     if unit.health <= 0 :
@@ -104,30 +103,44 @@ class Game:
                                             self.player_2_units.remove(unit)
                                             
                                 self.flip_display()
+                                selected_unit.skill_used = True
                                 
     def flip_display(self):
         """Affiche le jeu."""
 
         # Affiche la grille
-        self.screen.fill(BLACK)
-        for x in range(0, WIDTH, CELL_SIZE):
-            for y in range(0, HEIGHT, CELL_SIZE):
-                rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
-                pygame.draw.rect(self.screen, WHITE, rect, 1)
+        self.grid_flip_display()
 
         # Affiche les unités
-        for unit in self.player_1_units + self.player_2_units:
-            if unit.team == 'player_1':
-                pygame.draw.rect(self.screen, GREEN, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-            else :
-                pygame.draw.rect(self.screen, RED, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-            unit.draw(self.screen,Game.ENTREE)
-            #unit.draw_PM(self.screen)
+        self.unit_flip_display()
             
 
         # Rafraîchit l'écran
         pygame.display.flip()
 
+
+    def grid_flip_display(self):
+        
+        self.screen.fill(BLACK)
+        for x in range(0, WIDTH-500, CELL_SIZE):
+            for y in range(0, HEIGHT, CELL_SIZE):
+                rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
+                pygame.draw.rect(self.screen, WHITE, rect, 1)
+                    
+    def unit_flip_display(self):
+        
+        for unit in self.player_1_units + self.player_2_units:
+            if unit.team == 'player_1':
+                pygame.draw.rect(self.screen, GREEN, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            else :
+                pygame.draw.rect(self.screen, RED, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            
+            if unit.is_selected :
+                pygame.draw.rect(self.screen, YELLOW, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                
+            unit.draw(self.screen,Game.ENTREE)
+            
+            
 def main():
 
     # Initialisation de Pygame

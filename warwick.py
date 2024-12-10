@@ -27,7 +27,7 @@ class Warwick(Unit):
         
         self.draw_health_bar(screen) # dessiner la barre de sante
 
-    def skill_1(self,screen, l_unit_1, l_unit_2):
+    def skill_1(self, game):
         #Compétence : Morsure, attaque à 1 case de distance et rend de la vie
         nom = "Morsure"
         portee = 1
@@ -39,14 +39,12 @@ class Warwick(Unit):
                          (self.x, self.y - i)]
         heal = 10
         
-        self.afficher_position(screen,positions, BLUE)
+        cursor = Cursor(self.x, self.y, positions)
+        list_cursor = cursor.move_cursor(self.x, self.y, game)
         
-        cursor=Cursor(self.x, self.y,positions)
-        (x_cursor,y_cursor)=cursor.move_cursor(screen, self.x, self.y)
-        
-        for unit in l_unit_1 + l_unit_2 :
+        for unit in game.player_1_units + game.player_2_units :
             
-            if (unit.x, unit.y) == (x_cursor, y_cursor) and unit.team != self.team :
+            if (unit.x, unit.y) in list_cursor and unit.team != self.team :
                 unit.health -= self.attack_power
                 self.health += heal
                 
