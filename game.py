@@ -7,6 +7,7 @@ from xerath import *
 from missfortune import *
 from cursor import *
 from constante import *
+from trap import *
 
 class Game:
     """
@@ -37,6 +38,9 @@ class Game:
         self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
         self.player_2_units = [Warwick(6, 13, 'player_2'), Xerath(7,13, 'player_2'), MissFortune(8,13, 'player_2')]
+        
+        self.trap = Trap(5)
+        self.trap.genrer() #genrer les positions des pieges pour chaque nouvelle partie
 
     def handle_turn(self):
         """Tour du joueur"""
@@ -114,6 +118,10 @@ class Game:
             for y in range(0, HEIGHT, CELL_SIZE):
                 rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
                 pygame.draw.rect(self.screen, WHITE, rect, 1)
+                
+                
+        #on l'appelle ici pour que les pieges soient au dessus des cases noires
+        self.trap.draw_trap (self.screen)                
 
         # Affiche les unités
         for unit in self.player_1_units + self.player_2_units:
