@@ -23,7 +23,7 @@ class Trap:
         
         for  x, y in self.positions:
             # Affiche une image ou un rectangle pour représenter le piège
-            image = pygame.image.load("Baron_Nashor.png").convert_alpha()
+            image = pygame.image.load("img/Baron_Nashor.png").convert_alpha()
             image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
             screen.blit(image, (x * CELL_SIZE,y * CELL_SIZE))
         

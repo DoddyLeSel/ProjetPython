@@ -21,7 +21,7 @@ class MissFortune(Unit):
         self.draw_PM(screen, ENTREE)
         
         # Afficher l'image de l'unité
-        image = pygame.image.load("MissFortune.png").convert_alpha()
+        image = pygame.image.load("img/MissFortune.png").convert_alpha()
         image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
         screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))
         
