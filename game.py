@@ -40,11 +40,12 @@ class Game:
         self.player_2_units = [Warwick(6, 13, 'player_2'), Xerath(7,13, 'player_2'), MissFortune(8,13, 'player_2')]
         
         self.trap = Trap(5)
-        self.trap.genrer() #genrer les positions des pieges pour chaque nouvelle partie
+        self.trap.genrer() #génère les positions des pièges pour chaque nouvelle partie
 
     def handle_turn(self):
-        """Tour du joueur"""
+        
         #Tour du joueur 1 puis tour du joueur 2
+        
         for i in [0,1]:
             player_list = [self.player_1_units, self.player_2_units]
             for selected_unit in player_list[i] :
@@ -98,14 +99,7 @@ class Game:
                             if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
                                 selected_unit.skill_1(self)
-                                
-                                for unit in self.player_1_units + self.player_2_units :
-                                    if unit.health <= 0 :
-                                        if unit.team == 'player_1' :
-                                            self.player_1_units.remove(unit)
-                                        else :
-                                            self.player_2_units.remove(unit)
-                                            
+                                self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
                                 
@@ -122,7 +116,6 @@ class Game:
         # Affiche les unités
         self.unit_flip_display()
             
-
         # Rafraîchit l'écran
         pygame.display.flip()
 
@@ -148,7 +141,15 @@ class Game:
                 
             unit.draw(self.screen,Game.ENTREE)
             
-            
+    def unit_remove(self):
+        for unit in self.player_1_units + self.player_2_units :
+            if unit.health <= 0 :
+                if unit.team == 'player_1' :
+                    self.player_1_units.remove(unit)
+                else :
+                    self.player_2_units.remove(unit) 
+        
+        
 def main():
 
     # Initialisation de Pygame
@@ -168,3 +169,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

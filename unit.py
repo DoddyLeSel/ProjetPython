@@ -17,6 +17,8 @@ class Unit(ABC):
         La position y de l'unité sur la grille.
     health : int
         La santé de l'unité.
+    max_health : int
+        La santé maximale de l'unité
     attack_power : int
         La puissance d'attaque de l'unité.
     team : str
@@ -34,7 +36,7 @@ class Unit(ABC):
         Dessine l'unité sur la grille.
     """
 
-    def __init__(self, x, y, health, max_health, attack_power, PM, team):
+    def __init__(self, x, y, health, max_health, attack_power, PM, image, team):
         """
         Construit une unité avec une position, une santé, une puissance d'attaque et une équipe.
 
@@ -61,7 +63,8 @@ class Unit(ABC):
         self.max_health = max_health
         self.attack_power = attack_power
         self.PM = PM
-        self.team = team  # 'player' ou 'enemy'
+        self.image = image
+        self.team = team  # 'player_1' ou 'player_2'
         self.is_selected = False
         self.skill_used = False
 
@@ -77,12 +80,6 @@ class Unit(ABC):
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
             self.y = self.y_PM
-        
-
-    def attack(self, target):
-        """Attaque une unité cible."""
-        if abs(self.x - target.x) <= 1 and abs(self.y - target.y) <= 1:
-            target.health -= self.attack_power
 
     def draw_PM (self, screen, ENTREE) : 
         #dessiner les rect LIGHT_YELLOW (zone de mouvement possible)
@@ -98,23 +95,49 @@ class Unit(ABC):
         
         
     def draw(self, screen, ENTREE):
-        pass
+        
+        #Affiche l'unité sur l'écran
     
+        #Affiche les rectangles de déplacement
+        self.draw_PM(screen, ENTREE)
+        
+        #Affiche l'image de l'unité
+        image = pygame.image.load(self.image).convert_alpha()
+        image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
+        screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))
+        
+        #Affiche la barre de santé
+        self.draw_health_bar(screen)
+
+
     def draw_health_bar(self, screen):
         # dimensions 
         bar_width = CELL_SIZE #largeur
-        bar_height = 5  # hauteur
+        bar_height = 5        #hauteur
         x = self.x * CELL_SIZE
         y = self.y * CELL_SIZE - bar_height - 2  # position de la barre (au-dessus du personnage)
         
-        # calcul de la largeur de la barre verte 
+        #Calcul de la largeur de la barre verte
         actual_health = self.health / self.max_health
         green_width = int(bar_width * actual_health)
         
-        # dessiner la barre rouge 
+        #Dessine la barre rouge 
         pygame.draw.rect(screen, RED, (x, y, bar_width, bar_height))
-        # dessiner la barre verte
+        #Dessine la barre verte
         pygame.draw.rect(screen, GREEN, (x, y, green_width, bar_height))
+        
         
     def skill_1(self):
         pass
+    
+    def calcul_damage(self, game, zone_degats, puissance):
+        
+        hit = False
+        
+        for unit in game.player_1_units + game.player_2_units :
+            
+            if (unit.x, unit.y) in zone_degats and unit.team != self.team :
+                unit.health -= puissance
+                hit = True
+                
+        return True
