@@ -2,7 +2,7 @@ from constante import *
 import pygame
 import random
 
-class Mure:
+class mure:
     def __init__(self, nb_murs):
         self.nb_murs = nb_murs
         self.positions = set()  # Ensemble pour éviter les doublons

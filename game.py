@@ -26,7 +26,7 @@ class Game:
     player_2_units : list[Unit]
         La liste des unités du joueur 2.
     """
-    ENTREE = 0 #pour effacer les rect de selection une fois on appuie sur entree
+      #pour ENTREEeffacer les rect de selection une fois on appuie sur entree
     
     def __init__(self, screen):
         """
@@ -45,19 +45,22 @@ class Game:
         murs = mure(nb_murs)
         murs.generer_murs()
         self.trap = Trap(5)
-        self.trap.genrer() #genrer les positions des pieges pour chaque nouvelle partie
+        self.trap.genrer() #génère les positions des pièges pour chaque nouvelle partie
 
     def handle_turn(self):
-        """Tour du joueur"""
+        
         #Tour du joueur 1 puis tour du joueur 2
-        for i in [0,1]:
-            player_list = [self.player_1_units, self.player_2_units]
-            for selected_unit in player_list[i] :
+        all_units = list(zip(self.player_1_units, self.player_2_units))  # Paire des unités
+        for perso  in all_units :
+            for selected_unit in perso :
 
                 # Tant que l'unité n'a pas terminé son tour
                 has_acted = False
                 selected_unit.is_selected = True
                 selected_unit.skill_used = False
+                selected_unit.mouvement = False #pour controller l'affichage des cases se mouvements possibles
+                
+                
                 self.flip_display()
                 
                 while not has_acted:
@@ -71,8 +74,12 @@ class Game:
                             exit()
 
                         # Gestion des touches du clavier
+                        
                         if event.type == pygame.KEYDOWN:
-
+                            
+                            if event.key == pygame.K_p:
+                                selected_unit.mouvement = True #on veut afficher les mouvement possibles
+                            
                             # Déplacement (touches fléchées)
                             dx, dy = 0, 0
                             if event.key == pygame.K_LEFT :
@@ -84,12 +91,13 @@ class Game:
                             elif event.key == pygame.K_DOWN :
                                 dy = 1
 
-                            selected_unit.move_PM(dx, dy, Game.ENTREE)  #change la valeur de xpm et ypm cad les coord du rect jaune
+                            selected_unit.move_PM(dx, dy)  #change la valeur de xpm et ypm cad les coord du rect jaune
                             
-                             
+                            
+                            
                             if event.key == pygame.K_RETURN:  #on a choisie une position
                                 selected_unit.move() #change la valeur des coord de x et y cad l image 
-                                Game.ENTREE += 1 #on a appuye sur entree
+                                selected_unit.returnn = True #on a appuye sur entree
                             
                             self.flip_display()
 
@@ -98,19 +106,13 @@ class Game:
 
                                 has_acted = True
                                 selected_unit.is_selected = False
-                                Game.ENTREE=0 #reenit ENTREE
+                                selected_unit.returnn = False #reenit ENTREE
+                                selected_unit.mouvement = False #reenit la touche P
                             
                             if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
                                 selected_unit.skill_1(self)
-                                
-                                for unit in self.player_1_units + self.player_2_units :
-                                    if unit.health <= 0 :
-                                        if unit.team == 'player_1' :
-                                            self.player_1_units.remove(unit)
-                                        else :
-                                            self.player_2_units.remove(unit)
-                                            
+                                self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
                                 
@@ -126,7 +128,6 @@ class Game:
 
         # Affiche les unités
         self.unit_flip_display()
-        
 
         # Rafraîchit l'écran
         pygame.display.flip()
@@ -151,9 +152,19 @@ class Game:
             if unit.is_selected :
                 pygame.draw.rect(self.screen, YELLOW, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
                 
-            unit.draw(self.screen,Game.ENTREE)
+            unit.draw(self.screen)
             
-            
+    def unit_remove(self):
+        for unit in self.player_1_units + self.player_2_units :
+            if unit.health <= 0 :
+                if unit.team == 'player_1' :
+                    self.player_1_units.remove(unit)
+                else :
+                    self.player_2_units.remove(unit) 
+
+    
+        
+        
 def main():
 
     # Initialisation de Pygame
@@ -173,3 +184,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
