@@ -1,4 +1,5 @@
 from case import *
+from riviere import *
 class Grille:
     def __init__(self, taille):
         self.taille = taille 
@@ -8,7 +9,9 @@ class Grille:
         
         grille = [[case(x, y) for x in range(self.taille)] for y in range(self.taille)]
         return grille
-
+    def ajouter_riviere(self, x, y):
+        # Remplace une case normale par une rivière
+        self.cases[y][x] = riviere(x, y)
     def dessiner(self, surface):
         # Dessine la grille et les cases sur la fenêtre Pygame
         TAILLE_CASE = 50  

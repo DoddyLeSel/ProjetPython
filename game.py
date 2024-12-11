@@ -8,6 +8,9 @@ from missfortune import *
 from cursor import *
 from constante import *
 from trap import *
+from case import *
+from mure import *
+from grille import *
 
 class Game:
     """
@@ -38,7 +41,10 @@ class Game:
         self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
         self.player_2_units = [Warwick(6, 13, 'player_2'), Xerath(7,13, 'player_2'), MissFortune(8,13, 'player_2')]
-        
+        nb_murs = 10  # Nombre de murs à générer
+        self.murs = mure(nb_murs)
+        self.murs.generer_murs()
+        self.rivieres = [riviere(5, 5), riviere(6, 5), riviere(7, 5)]  # Exemple de positions de rivières
         self.trap = Trap(5)
         self.trap.genrer() #génère les positions des pièges pour chaque nouvelle partie
 
@@ -139,11 +145,14 @@ class Game:
         self.grid_flip_display()
              
         #on l'appelle ici pour que les pieges soient au dessus des cases noires
-        self.trap.draw_trap(self.screen)                
+        self.trap.draw_trap(self.screen)   
+        # Dessine les murs
+        self.murs.dessiner_murs(self.screen)
+               
 
         # Affiche les unités
         self.unit_flip_display()
-            
+
         # Rafraîchit l'écran
         pygame.display.flip()
 
@@ -199,4 +208,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
