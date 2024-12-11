@@ -70,7 +70,7 @@ class Cursor:
                     
     def draw_cursor(self, game):              #Affiche le curseur
         
-        game.grid_flip_display()
+        game.grille.draw_grille(game.screen)
         
         self.afficher_position(game.screen)
         
@@ -90,7 +90,8 @@ class Cursor:
             if pos != (self.x_origin, self.y_origin) and 0 <= pos[0] < GRID_SIZE and 0 <= pos[1] < GRID_SIZE:
                 pygame.draw.rect(screen, self.color2, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
                 pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
-                
+
+
     def zone_spe(self):
         if self.zone_special == "xerath_skill_1":
             self.zone = []

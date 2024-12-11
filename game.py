@@ -8,8 +8,6 @@ from missfortune import *
 from cursor import *
 from constante import *
 from trap import *
-from case import *
-from mure import *
 from grille import *
 
 class Game:
@@ -26,7 +24,6 @@ class Game:
     player_2_units : list[Unit]
         La liste des unités du joueur 2.
     """
-    #pour ENTREEeffacer les rect de selection une fois on appuie sur entree
     
     def __init__(self, screen):
         """
@@ -40,18 +37,11 @@ class Game:
         self.screen = screen
         self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
-        self.player_2_units = [Warwick(6, 13, 'player_2'), Xerath(7,13, 'player_2'), MissFortune(8,13, 'player_2')]
-        nb_murs = 10  # Nombre de murs à générer
-        self.murs = mure(nb_murs)
-        self.murs.generer_murs()
-        self.rivieres=[]
-        for i in range (4,15):
-            for j in range (8,10):
-                self.rivieres.append(riviere(i,j))
-        #self.rivieres = [riviere(5, 5), riviere(6, 5), riviere(7, 5)]  # Exemple de positions de rivières
-        self.trap = Trap(5)
-        self.trap.genrer() #génère les positions des pièges pour chaque nouvelle partie
+        self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
+        self.grille = Grille()
+        
+        
     def handle_turn(self):
         
         #Tour du joueur 1 puis tour du joueur 2
@@ -145,32 +135,16 @@ class Game:
         """Affiche le jeu."""
 
         # Affiche la grille
-
-        self.grid_flip_display()
-             
-        #on l'appelle ici pour que les pieges soient au dessus des cases noires
-        self.trap.draw_trap(self.screen)   
-        # Dessine les murs
-        self.murs.dessiner_murs(self.screen) #pour qu'il dessine les murs de facon aleztoires
-        for riviere in self.rivieres:
-            riviere.dessiner(self.screen)  
-               
-
+        self.grille.draw_grille(self.screen)
+ 
         # Affiche les unités
         self.unit_flip_display()
 
         # Rafraîchit l'écran
         pygame.display.flip()
 
+      
 
-    def grid_flip_display(self):
-        
-        self.screen.fill(BLACK)
-        for x in range(0, WIDTH-500, CELL_SIZE):
-            for y in range(0, HEIGHT, CELL_SIZE):
-                rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
-                pygame.draw.rect(self.screen, WHITE, rect, 1)
-                    
     def unit_flip_display(self):
         
         for unit in self.player_1_units + self.player_2_units:
