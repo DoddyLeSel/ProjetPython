@@ -5,6 +5,7 @@ import random
 class mure:
     def __init__(self, nb_murs):
         self.nb_murs = nb_murs
+        self.couleur=GREEN
         self.positions = set()  # Ensemble pour éviter les doublons
 
     def generer_murs(self):
@@ -16,9 +17,10 @@ class mure:
 
     def dessiner_murs(self, screen):
         """Dessine les murs comme des rectangles gris."""
+        
         for x, y in self.positions:
             pygame.draw.rect(
                 screen,
-                GREEN,  # Couleur grise
+                (255,255,255),  # Couleur grise
                 (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             )
