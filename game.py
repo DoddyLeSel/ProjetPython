@@ -8,6 +8,9 @@ from missfortune import *
 from cursor import *
 from constante import *
 from trap import *
+from case import *
+from mure import *
+from grille import *
 
 class Game:
     """
@@ -38,7 +41,9 @@ class Game:
         self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
         self.player_2_units = [Warwick(6, 13, 'player_2'), Xerath(7,13, 'player_2'), MissFortune(8,13, 'player_2')]
-        
+        nb_murs = 10  # Nombre de murs à générer
+        murs = mure(nb_murs)
+        murs.generer_murs()
         self.trap = Trap(5)
         self.trap.genrer() #genrer les positions des pieges pour chaque nouvelle partie
 
@@ -121,7 +126,7 @@ class Game:
 
         # Affiche les unités
         self.unit_flip_display()
-            
+        
 
         # Rafraîchit l'écran
         pygame.display.flip()

@@ -1,5 +1,6 @@
 import pygame
 import random
+from case import *
 from constante import *
 
 class Trap:
