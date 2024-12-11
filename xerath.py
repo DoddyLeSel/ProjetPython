@@ -25,11 +25,37 @@ class Xerath(Unit):
 
     def skill_1(self, game):
         
-        #Compétence : , attaque à 5 de distance sur une petite zone
+        #Compétence : Rayon Arcanique,
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = ""
+        nom = "Rayon Arcanique"
+        puissance = 20 + 0.1 * self.attack_power
+        portee = 5
+        positions = [(self.x, self.y)]
+        for i in range(-portee,portee +1):
+            for j in range(-portee,portee +1):
+                if abs(j) + abs(i) == abs(i) or abs(j) + abs(i) == abs(j) and (i,j) != (0,0):
+                    positions += [(self.x + i, self.y + j)]
+        
+        zone = "xerath_skill_1"
+        #######################################
+        
+        #Appelle un curseur pour définir l'endroit où utiliser la compétence
+        cursor = Cursor(self.x, self.y,positions, zone=zone)
+        list_cursor = cursor.move_cursor(game)
+        
+        #Applique les effets de la compétence
+        hit = self.calcul_damage(game, list_cursor, puissance)
+
+
+    def skill_2(self, game):
+        
+        #Compétence : Oeil de la Destruction, attaque à 5 de distance sur une petite zone
+        
+        #######################################
+        #Défini les paramètres de la compétence
+        nom = "Oeil de la destruction"
         puissance = 20 + 0.1 * self.attack_power
         portee = 5
         positions = [(self.x, self.y)]
@@ -47,3 +73,28 @@ class Xerath(Unit):
         
         #Applique les effets de la compétence
         hit = self.calcul_damage(game, list_cursor, puissance)
+        
+    def skill_3(self, game):
+        
+        #Compétence : Orbe d'électrocution, étourdi un ennemi
+        
+        #######################################
+        #Défini les paramètres de la compétence
+        nom = "Oeil de la destruction"
+        puissance = 5 + 0.1 * self.attack_power
+        portee = 4
+        positions = [(self.x, self.y)]
+        for i in range(-portee,portee +1):
+            for j in range(-portee,portee +1):
+                if abs(j) + abs(i) == abs(i) or abs(j) + abs(i) == abs(j) and (i,j) != (0,0):
+                    positions += [(self.x + i, self.y + j)]
+        
+        #######################################
+        
+        #Appelle un curseur pour définir l'endroit où utiliser la compétence
+        cursor = Cursor(self.x, self.y,positions)
+        list_cursor = cursor.move_cursor(game)
+        
+        #Applique les effets de la compétence
+        hit = self.calcul_damage(game, list_cursor, puissance)
+        self.stun(game, list_cursor)

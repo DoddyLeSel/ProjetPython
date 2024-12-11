@@ -25,12 +25,12 @@ class Warwick(Unit):
 
     def skill_1(self, game):
         
-        #Compétence : Morsure, attaque à 1 case de distance et rend de la vie
+        #Compétence : Dents de la Bête, attaque à 1 case de distance et rend de la vie
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Morsure"
-        puissance = 20 + 0.1 * self.attack_power
+        nom = "Dents de la Bête"
+        puissance = 20 + 0.5 * self.attack_power
         portee = 1
         positions = [(self.x, self.y)]
         for i in range(-portee,portee +1):
@@ -52,4 +52,37 @@ class Warwick(Unit):
             if self.health > self.max_health :
                 self.health = self.max_health
 
-    
+    def skill_2(self, game):
+        
+        #Compétence : Traque sanguinaire, augmente ses PM de 3 points et double sa stat d'attaque
+        
+        #######################################
+        #Défini les paramètres de la compétence
+        nom = "Traque Sanguinaire"
+        boost_PM = 3
+        boost_attack = self.attack_power
+        #######################################
+        
+        #Applique les effets de la compétence
+        self.PM += boost_PM
+        self.attack_power += boost_attack
+        
+        self.own_boost_PM = True
+        self.own_boost_attack = True
+        
+    def skill_3(self, game):
+        
+        #Compétence : Hurlement Bestial, étourdi les ennemis à 1 case de distance autour de lui
+        
+        #######################################
+        #Défini les paramètres de la compétence
+        nom = "Hurlement Bestial"
+        portee = 1
+        positions = [(self.x, self.y)]
+        for i in range(-portee,portee +1):
+            positions += [(self.x + i, self.y),
+                         (self.x, self.y + i)]
+        #######################################
+
+        #Applique les effets de la compétence
+        self.stun(game, positions)

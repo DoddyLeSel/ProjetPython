@@ -24,11 +24,11 @@ class MissFortune(Unit):
         
 
     def skill_1(self, game):
-        #Compétence : , attaque à 3 de distance
+        #Compétence : Doublé, attaque simple à 3 de distance
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = ""
+        nom = "Doublé"
         puissance = 30 + 0.1 * self.attack_power
         portee = 3
         positions = [(self.x, self.y)]
@@ -43,5 +43,50 @@ class MissFortune(Unit):
         list_cursor = cursor.move_cursor(game)
         
         #Applique les effets de la compétence
-        hit = self.calcul_damage(game, list_cursor, puissance)
+        self.calcul_damage(game, list_cursor, puissance)
 
+
+    def skill_2(self, game):
+        #Compétence : Fanfaronne, double les PM
+        
+        #######################################
+        #Défini les paramètres de la compétence
+        nom = "Fanfaronne"
+        boost_PM = self.PM
+        #######################################
+        
+        #Applique les effets de la compétence
+        self.PM += boost_PM
+
+        self.own_boost_PM = True
+
+    def skill_3(self, game):
+        #Compétence : Pluie de Balles, attaque en zone à 3 de distance et ralenti les ennemis dans la zone
+        
+        #######################################
+        #Défini les paramètres de la compétence
+        nom = "Pluie de Balles"
+        puissance = 10 + 0.1 * self.attack_power
+        portee = 3
+        positions = [(self.x, self.y)]
+        for i in range(-portee,portee +1):
+            for j in range(-portee,portee +1):
+                if abs(i) + abs(j) <= portee and (i,j) != (0,0):
+                    positions += [(self.x + i, self.y + j)]
+        aoe = 1                    
+        zone = []
+        for k in range(-aoe, aoe+1):
+            for l in range(-aoe, aoe+1):
+                if abs(k) + abs(l) <= aoe:
+                    zone += [(k,l)]
+                    
+        slow = -1
+        #######################################
+        
+        #Appelle un curseur pour définir l'endroit où utiliser la compétence
+        cursor = Cursor(self.x, self.y, positions, zone=zone)
+        list_cursor = cursor.move_cursor(game)
+        
+        #Applique les effets de la compétence
+        self.calcul_damage(game, list_cursor, puissance)
+        self.slow(game, list_cursor, slow)

@@ -21,21 +21,21 @@ class Cursor:
     """
     def __init__(self, x, y, positions, zone=[(0,0)], color=RED, color2=BLUE):
 
-        self.x = x
-        self.y = y
-        self.x_origin = x
-        self.y_origin = y
+        self.x = x                              #Position en x
+        self.y = y                              #Position en y
+        self.x_origin = x                       #Backup pour la position initiale en x
+        self.y_origin = y                       #Backup pour la position initiale en y
         
-        self.color = color
-        self.color2 = color2
-        self.positions = positions
-        self.zone = zone
+        self.color = color                      #Couleur du curseur
+        self.color2 = color2                    #Couleur de la zone d'action (bleu par défaut)
+        self.positions = positions              #Positions que peut prendre le curseur
+        self.zone = zone                        #Taille de curseur (1 case par défaut)
+        self.zone_special = zone
+    def move_cursor(self, game):                #Déplace le curseur à l'aide des événements pygame et renvoi la liste de la ou des positions finales du curseur (selon la taille du curseur)
         
-    def move_cursor(self, game):
-    
-        #Déplace le curseur à l'aide des événements pygame et renvoi la liste des positions finales du curseur
-       
-        self.draw_cursor(game)
+        self.afficher_position(game.screen)
+        game.unit_flip_display()
+        pygame.display.flip()
         
         while True :
             for event in pygame.event.get():
@@ -56,7 +56,9 @@ class Cursor:
                     if (self.x + dx, self.y + dy) in self.positions and 0 <= self.x + dx < GRID_SIZE and 0 <= self.y + dy < GRID_SIZE :
                         self.x += dx
                         self.y += dy
-                        
+                    
+                    self.zone_spe()
+                    
                     self.draw_cursor(game)
                 
                     if event.key == pygame.K_RETURN:
@@ -66,9 +68,7 @@ class Cursor:
                         return l
                     
                     
-    def draw_cursor(self, game):
-        
-        #Affiche le curseur
+    def draw_cursor(self, game):              #Affiche le curseur
         
         game.grid_flip_display()
         
@@ -84,11 +84,37 @@ class Cursor:
         pygame.display.flip()
         
 
-    def afficher_position(self, screen):
-        
-        #Affiche les positions possibles pour la compétence
+    def afficher_position(self, screen):           #Affiche la zone d'action du curseur
         
         for pos in self.positions :
             if pos != (self.x_origin, self.y_origin) and 0 <= pos[0] < GRID_SIZE and 0 <= pos[1] < GRID_SIZE:
                 pygame.draw.rect(screen, self.color2, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
                 pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                
+    def zone_spe(self):
+        if self.zone_special == "xerath_skill_1":
+            self.zone = []
+                        
+            if self.x - self.x_origin < 0 :
+                pas_x = -1
+            else:
+                pas_x = 1
+                        
+            if self.y - self.y_origin < 0 :
+                pas_y = -1
+            else:
+                pas_y = 1
+                        
+            if self.x - self.x_origin == 0 :
+                constante_x = 1
+            else :
+                constante_x = 0
+                        
+            if self.y - self.y_origin == 0 :
+                constante_y = 1
+            else :
+                constante_y = 0
+                        
+            for i in range(0, self.x - self.x_origin + constante_x, pas_x):
+                for j in range(0, self.y - self.y_origin + constante_y, pas_y):
+                    self.zone += [(-i, -j)]
