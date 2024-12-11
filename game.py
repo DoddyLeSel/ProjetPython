@@ -23,7 +23,7 @@ class Game:
     player_2_units : list[Unit]
         La liste des unités du joueur 2.
     """
-      #pour ENTREEeffacer les rect de selection une fois on appuie sur entree
+    #pour ENTREEeffacer les rect de selection une fois on appuie sur entree
     
     def __init__(self, screen):
         """
@@ -53,8 +53,12 @@ class Game:
                 has_acted = False
                 selected_unit.is_selected = True
                 selected_unit.skill_used = False
-                selected_unit.mouvement = False #pour controller l'affichage des cases se mouvements possibles
+                selected_unit.mouvement = False     #pour controller l'affichage des cases se mouvements possibles
                 
+                if selected_unit.stunt :            #Passe le tour si l'unité est étourdie
+                    has_acted = True
+                    selected_unit.is_selected = False
+                    selected_unit.stunt = False
                 
                 self.flip_display()
                 
@@ -89,20 +93,12 @@ class Game:
                             selected_unit.move_PM(dx, dy)  #change la valeur de xpm et ypm cad les coord du rect jaune
                             
                             
-                            
-                            if event.key == pygame.K_RETURN:  #on a choisie une position
-                                selected_unit.move() #change la valeur des coord de x et y cad l image 
-                                selected_unit.returnn = True #on a appuye sur entree
+                            if event.key == pygame.K_RETURN:   #on a choisie une position
+                                selected_unit.move()           #change la valeur des coord de x et y cad l image 
+                                selected_unit.returnn = True   #on a appuye sur entree
                             
                             self.flip_display()
 
-                            # Attaque (touche espace) met fin au tour
-                            if event.key == pygame.K_SPACE:
-
-                                has_acted = True
-                                selected_unit.is_selected = False
-                                selected_unit.returnn = False #reenit ENTREE
-                                selected_unit.mouvement = False #reenit la touche P
                             
                             if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
@@ -110,6 +106,30 @@ class Game:
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
+                            
+                            if event.key == pygame.K_z and not selected_unit.skill_used:
+                                
+                                selected_unit.skill_2(self)
+                                self.unit_remove()             
+                                self.flip_display()
+                                selected_unit.skill_used = True
+                                
+                            if event.key == pygame.K_e and not selected_unit.skill_used:
+                                
+                                selected_unit.skill_3(self)
+                                self.unit_remove()             
+                                self.flip_display()
+                                selected_unit.skill_used = True                                
+                                
+                            # Fin de tour
+                            if event.key == pygame.K_SPACE:
+
+                                has_acted = True
+                                selected_unit.is_selected = False
+                                selected_unit.returnn = False #reenit ENTREE
+                                selected_unit.mouvement = False #reenit la touche P
+                                selected_unit.fin_boost()
+                                
                                 
     def flip_display(self):
         """Affiche le jeu."""

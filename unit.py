@@ -62,13 +62,20 @@ class Unit(ABC):
         self.health = health
         self.max_health = max_health
         self.attack_power = attack_power
+        self.attack_power_origin = attack_power
         self.PM = PM
+        self.PM_origin = PM
         self.image = image
         self.team = team  # 'player_1' ou 'player_2'
+        
         self.is_selected = False
         self.skill_used = False
         self.returnn = False
         self.mouvement = False
+        self.stunt = False
+        
+        self.own_boost_PM = False
+        self.own_boost_attack = False
         
         
     def move_PM(self, dx, dy):
@@ -138,9 +145,6 @@ class Unit(ABC):
         #Dessine la barre verte
         pygame.draw.rect(screen, GREEN, (x, y, green_width, bar_height))
         
-        
-    def skill_1(self):
-        pass
     
     def calcul_damage(self, game, zone_degats, puissance):
         
@@ -153,3 +157,45 @@ class Unit(ABC):
                 hit = True
                 
         return True
+
+
+    def stun(self, game, zone_stun):
+        
+        hit = False
+        
+        for unit in game.player_1_units + game.player_2_units :
+            
+            if (unit.x, unit.y) in zone_stun and unit.team != self.team :
+                unit.stunt = True
+                hit = True
+                
+    def slow(self, game, zone_slow, slow):
+        
+        hit = False
+        
+        for unit in game.player_1_units + game.player_2_units :
+            
+            if (unit.x, unit.y) in zone_slow and unit.team != self.team :
+                unit.PM += slow
+                hit = True
+
+    def fin_boost(self) :
+        
+        if self.own_boost_PM :
+            self.own_boost_PM = False
+        else:
+            self.PM = self.PM_origin
+            
+        if self.own_boost_attack :
+            self.own_boost_attack = False
+        else:
+            self.attack_power = self.attack_power_origin
+
+    def skill_1(self):
+        pass
+    
+    def skill_2(self):
+        pass
+    
+    def skill_3(self):
+        pass
