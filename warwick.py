@@ -18,7 +18,7 @@ class Warwick(Unit):
         DAMAGE = 20
         VIE_MAX = 100
         PM = 4
-        image = "img/Warwick.png"
+        image = "img/Warwick2.png"
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
@@ -52,4 +52,4 @@ class Warwick(Unit):
             if self.health > self.max_health :
                 self.health = self.max_health
 
-        
+    

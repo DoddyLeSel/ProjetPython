@@ -18,7 +18,7 @@ class MissFortune(Unit):
         DAMAGE = 20
         VIE_MAX = 100
         PM = 3
-        image = "img/MissFortune.png"
+        image = "img/MissFortune2.webP"
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
@@ -44,3 +44,4 @@ class MissFortune(Unit):
         
         #Applique les effets de la compétence
         hit = self.calcul_damage(game, list_cursor, puissance)
+

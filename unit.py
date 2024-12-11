@@ -67,39 +67,51 @@ class Unit(ABC):
         self.team = team  # 'player_1' ou 'player_2'
         self.is_selected = False
         self.skill_used = False
-
-    def move_PM(self, dx, dy, ENTREE):
+        self.returnn = False
+        self.mouvement = False
+        
+        
+    def move_PM(self, dx, dy):
         """Déplace le carre de selection de dx, dy."""
-        if self.x - self.PM <= self.x_PM + dx <= self.x + self.PM and self.y - self.PM <= self.y_PM + dy <= self.y + self.PM and 0 <= self.x_PM + dx < GRID_SIZE and 0 <= self.y_PM + dy < GRID_SIZE and ENTREE ==0:
+        if self.x - self.PM <= self.x_PM + dx <= self.x + self.PM and self.y - self.PM <= self.y_PM + dy <= self.y + self.PM and 0 <= self.x_PM + dx < GRID_SIZE and 0 <= self.y_PM + dy < GRID_SIZE and self.returnn ==False:
         # on compare avec self.x - pm cad par rapport a la position du perso 
-            self.x_PM += dx
-            self.y_PM += dy
+            
+            #pour former le losange
+            if self.x_PM + dx == self.x or self.y_PM +dy == self.y:    
+                self.x_PM += dx
+                self.y_PM += dy
     
     
     def move(self):
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
             self.y = self.y_PM
+            
 
-    def draw_PM (self, screen, ENTREE) : 
+    def draw_PM (self, screen) : 
         #dessiner les rect LIGHT_YELLOW (zone de mouvement possible)
-        if self.is_selected and ENTREE == 0: 
+        
+        if self.is_selected and self.returnn ==False : 
             for i in range(self.x - self.PM, self.x + self.PM + 1):
                 for j in range(self.y - self.PM, self.y + self.PM + 1):
                     # Vérifiez que les coordonnées sont valides dans la grille
                     if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE and (i,j) != (self.x,self.y):
-                        pygame.draw.rect(screen, LIGHT_YELLOW, (i * CELL_SIZE  , j * CELL_SIZE , CELL_SIZE -1 , CELL_SIZE -1)) #-1 pour garder les bordures blanches
+                        #pour former un lesange 
+                        if i == self.x or j == self.y:
+                            pygame.draw.rect(screen, LIGHT_YELLOW, (i * CELL_SIZE  , j * CELL_SIZE , CELL_SIZE -1 , CELL_SIZE -1)) #-1 pour garder les bordures blanches
         
             #dessiner le rect YELLOW (position actuelle)
             pygame.draw.rect(screen, YELLOW, (self.x_PM * CELL_SIZE, self.y_PM * CELL_SIZE, CELL_SIZE, CELL_SIZE))
         
         
-    def draw(self, screen, ENTREE):
+    def draw(self, screen):
         
         #Affiche l'unité sur l'écran
     
         #Affiche les rectangles de déplacement
-        self.draw_PM(screen, ENTREE)
+        if self.mouvement ==True :
+            
+            self.draw_PM(screen)
         
         #Affiche l'image de l'unité
         image = pygame.image.load(self.image).convert_alpha()
