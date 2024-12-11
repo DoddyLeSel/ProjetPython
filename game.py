@@ -127,7 +127,9 @@ class Game:
         #on l'appelle ici pour que les pieges soient au dessus des cases noires
         self.trap.draw_trap(self.screen)   
         # Dessine les murs
-        self.murs.dessiner_murs(self.screen)
+        self.murs.dessiner_murs(self.screen) #pour qu'il dessine les murs de facon aleztoires
+        for riviere in self.rivieres:
+            riviere.dessiner(self.screen)  
                
 
         # Affiche les unités
