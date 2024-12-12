@@ -21,7 +21,7 @@ class Game:
     screen: pygame.Surface
         La surface de la fenêtre du jeu.
     player_1_units : list[Unit]
-        La liste des unités du joueur 1.
+        La liste des unités du joueur 1
     player_2_units : list[Unit]
         La liste des unités du joueur 2.
     """

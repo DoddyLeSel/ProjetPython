@@ -36,13 +36,13 @@ class Grille:
             for j in range(len(tableau[i])) :
                 
                 if tableau[i][j] == 1:
-                    grille += [Terrain(j,i)]
+                    grille .append(Terrain(j,i))
                     
                 elif tableau[i][j] == 2:
-                    grille += [Mur(j,i)]
+                    grille.append(Mur(j,i))
                     
                 elif tableau[i][j] == 3:
-                    grille += [Riviere(j,i)]
+                    grille.append(Riviere(j,i))
 
         return grille
         
