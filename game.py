@@ -9,6 +9,7 @@ from cursor import *
 from constante import *
 from trap import *
 from grille import *
+from item import*
 
 class Game:
     """
@@ -40,6 +41,9 @@ class Game:
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
+        
+        self.item= Item(5) #creer les objets magique (Rod of ages)
+        self.item.generer()
         
         
     def handle_turn(self):
@@ -96,7 +100,9 @@ class Game:
                             if event.key == pygame.K_RETURN:   #on a choisie une position
                                 selected_unit.move()           #change la valeur des coord de x et y cad l image 
                                 selected_unit.returnn = True   #on a appuye sur entree
-                            
+                                
+                                self.item.is_collected(selected_unit.x, selected_unit.y)
+                                
                             self.flip_display()
 
                             
@@ -136,6 +142,9 @@ class Game:
 
         # Affiche la grille
         self.grille.draw_grille(self.screen)
+        
+        #affiche les objets magiques dans la grille
+        self.item.draw_item(self.screen)
  
         # Affiche les unités
         self.unit_flip_display()
