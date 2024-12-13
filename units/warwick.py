@@ -1,6 +1,6 @@
 import pygame
 
-from unit import *
+from units import *
 
 class Warwick(Unit):
     """

@@ -1,5 +1,5 @@
 import pygame
-from case import *
+from .case import *
 from constante import *
 
 class Riviere(Case):

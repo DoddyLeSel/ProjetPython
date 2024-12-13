@@ -1,6 +1,6 @@
 import pygame
 
-from unit import *
+from units import *
 
 class MissFortune(Unit):
     """
@@ -18,7 +18,7 @@ class MissFortune(Unit):
         DAMAGE = 20
         VIE_MAX = 100
         PM = 3
-        image = "img/MissFortune2.webP"
+        image = "img/MissFortune.png"
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         

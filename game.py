@@ -1,15 +1,15 @@
 import pygame
 import random
-from unit import *
-from warwick import *
-from xerath import *
-from missfortune import *
+
+from units import *
+from board import *
+
 from cursor import *
 from constante import *
+
 from trap import *
-from grille import *
 from item import*
-from fumee import *
+
 
 class Game:
     """
@@ -41,6 +41,7 @@ class Game:
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
+        
         for i in range (7,10):
             for j in range (0,3):
                 self.grille.activer_fumee(i, j, 100)

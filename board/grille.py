@@ -1,8 +1,9 @@
-from case import *
-from riviere import *
-from terrain import *
-from mur import *
-from fumee import *
+from .mur import *
+from .riviere import *
+from .terrain import *
+from .fumee import *
+
+from constante import *
 
 class Grille:
     
@@ -47,9 +48,11 @@ class Grille:
                     grille.append(Riviere(j,i))
 
         return grille
+    
     def activer_fumee(self, x, y, duree):
         for fumee in self.fumees:
             fumee.temps_restant()  #appel  de fumée
+            
         # Filtrer les fumées pour ne garder que celles qui sont actives
             """Ajoute une zone de fumée à la grille."""
             print(f"Ajout de la fumée aux coordonnées : ({x}, {y})")
