@@ -1,9 +1,11 @@
 import pygame
 import random
-from case import *
+
+from board import *
 from constante import *
 
 class Trap:
+    
     def __init__(self, nb_traps):
         
         self.nb_traps = nb_traps

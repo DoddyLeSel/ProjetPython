@@ -1,6 +1,6 @@
 import pygame
 
-from unit import *
+from units import *
 
 class Xerath(Unit):
     """
@@ -18,7 +18,7 @@ class Xerath(Unit):
         DAMAGE = 20
         VIE_MAX = 100
         PM = 2
-        image = "img/Xerath2.webP"
+        image = "img/Xerath.png"
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         

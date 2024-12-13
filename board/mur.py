@@ -1,13 +1,14 @@
 import pygame
-from case import *
+
+from .case import *
 from constante import *
 
-class Terrain(Case) :
+class Mur(Case) :
     
     def __init__(self, x, y):
         
-        image = "img/Terrain.png"
+        image = "img/Mur.png"
         
         super().__init__(x, y, image)
         
-        self.is_accessible = True
+        self.is_accessible = False

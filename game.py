@@ -1,15 +1,15 @@
 import pygame
 import random
-from unit import *
-from warwick import *
-from xerath import *
-from missfortune import *
+
+from units import *
+from board import *
+
 from cursor import *
 from constante import *
+
 from trap import *
-from grille import *
 from item import*
-from fumee import *
+
 
 class Game:
     """
@@ -42,7 +42,12 @@ class Game:
 
         self.grille = Grille()
         
+
         self.grille.activer_fumee(3, 10, 100)
+
+        
+        self.grille.activer_fumee(3, 4, 100)
+
                 
         
         self.grille.mettre_a_jour_fumees()
@@ -147,8 +152,7 @@ class Game:
 
         # Affiche la grille
         self.grille.draw_grille(self.screen)
-        #dessiner la fumée
-        self.fumee.draw_case(self.screen)  # Appel à draw_case() pour chaque fumée dans self.grille.fumees
+      
         
         #affiche les objets magiques dans la grille
         self.item.draw_item(self.screen)
