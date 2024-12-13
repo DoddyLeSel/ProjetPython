@@ -2,6 +2,7 @@ from case import *
 from riviere import *
 from terrain import *
 from mur import *
+from fumee import *
 
 class Grille:
     
@@ -10,24 +11,25 @@ class Grille:
         self.width = CELL_SIZE * GRID_SIZE 
         self.height = CELL_SIZE * GRID_SIZE 
         self.grille = self.grille_init()
+        self.fumees=[]
 
     def grille_init(self):
         
-        tableau = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 1 pour Terrain
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 2 pour Mur
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 3 pour Rivière
-                   [1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
+        tableau = [[2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 1 pour Terrain
+                   [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 2 pour Mur
+                   [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 3 pour Rivière
+                   [2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 3, 3, 3, 3, 3],
+                   [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3],
+                   [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3],
+                   [2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 1, 1],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 1, 1, 3, 3, 3, 3],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3],
                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   [1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1],
-                   [3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 1, 1],
-                   [3, 3, 3, 3, 3, 1, 1, 1, 3, 3, 1, 1, 3, 3, 3, 3],
-                   [1, 1, 1, 1, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 3, 3],
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   [1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],
+                   [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
         
         grille = []
@@ -36,7 +38,7 @@ class Grille:
             for j in range(len(tableau[i])) :
                 
                 if tableau[i][j] == 1:
-                    grille .append(Terrain(j,i))
+                    grille.append(Terrain(j,i))
                     
                 elif tableau[i][j] == 2:
                     grille.append(Mur(j,i))
@@ -45,6 +47,30 @@ class Grille:
                     grille.append(Riviere(j,i))
 
         return grille
+    def activer_fumee(self, x, y, duree):
+        for fumee in self.fumees:
+            fumee.temps_restant()  #appel  de fumée
+        # Filtrer les fumées pour ne garder que celles qui sont actives
+            """Ajoute une zone de fumée à la grille."""
+            print(f"Ajout de la fumée aux coordonnées : ({x}, {y})")
+            nouvelle_fumee = fumee(x, y, duree)
+            self.fumees.append(nouvelle_fumee)
+        self.fumees = [fumee for fumee in self.fumees if fumee.is_active()]
+        
+    
+    def mettre_a_jour_fumees(self):
+    # Décrémente la durée de chaque fumée et supprime celles qui sont expirées.
+        for fumee in self.fumees:
+            fumee.temps_restant()  # Met à jour la durée de chaque fumée
+        
+    # Supprimer les fumées expirées
+        self.fumees = [fumee for fumee in self.fumees if fumee.est_active]
+
+        
+    def draw_fumees(self, screen):
+       # Dessine toutes les fumées actives sur la grille.
+        for fumee in self.fumees:
+            fumee.draw_case(screen)
         
         
     def draw_grille(self, screen):

@@ -39,5 +39,6 @@ class Item(Unit):
         if (x,y) in self.positions : #verifier si le perso est sur la case de l'objet
             self.has_item = True #le perso possède un objet 
             self.positions.discard((x,y)) #supprimer les coord de l objet du set
+        
             
         

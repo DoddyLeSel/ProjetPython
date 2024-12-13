@@ -1,6 +1,5 @@
 import pygame
 import random
-
 from unit import *
 from warwick import *
 from xerath import *
@@ -10,6 +9,7 @@ from constante import *
 from trap import *
 from grille import *
 from item import*
+from fumee import *
 
 class Game:
     """
@@ -41,6 +41,12 @@ class Game:
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
+        for i in range (7,10):
+            for j in range (0,3):
+                self.grille.activer_fumee(i, j, 100)
+                
+        
+        self.grille.mettre_a_jour_fumees()
         
         self.item= Item(5) #creer les objets magique (Rod of ages)
         self.item.generer()
@@ -142,6 +148,9 @@ class Game:
 
         # Affiche la grille
         self.grille.draw_grille(self.screen)
+        #dessiner la fumée
+        for fumee in self.grille.fumees:
+            fumee.draw_case(self.screen)  # Appel à draw_case() pour chaque fumée dans self.grille.fumees
         
         #affiche les objets magiques dans la grille
         self.item.draw_item(self.screen)
