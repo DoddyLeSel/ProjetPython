@@ -4,14 +4,11 @@ import random
 from units import *
 from board import *
 
-from cursor import *
 from constante import *
 from menu_lateral import *
 
 from trap import *
 from item import*
-
-global game
 
 class Game:
     """
@@ -27,8 +24,7 @@ class Game:
     player_2_units : list[Unit]
         La liste des unités du joueur 2.
     """
-    
-    instance = None
+
     
     def __init__(self, screen):
         """
@@ -55,7 +51,7 @@ class Game:
         
         self.item= Item(5) #creer les objets magique (Rod of ages)
         self.item.generer()
-
+        
         
     def handle_turn(self):
         
@@ -121,21 +117,21 @@ class Game:
                             
                             if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_1()
+                                selected_unit.skill_1(self)
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
                             
                             if event.key == pygame.K_z and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_2()
+                                selected_unit.skill_2(self)
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
                                 
                             if event.key == pygame.K_e and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_3()
+                                selected_unit.skill_3(self)
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True                                
@@ -150,16 +146,13 @@ class Game:
                                 selected_unit.reinitialiser_PM() #reinit les valeurs des PM et les modifier si y a eu un passage par une riviere
                                 selected_unit.fin_boost()
                                   
-
-                                    
-                                
                                 
                                 
     def flip_display(self):
         """Affiche le jeu."""
 
         # Affiche la grille
-        self.grille.draw_grille(self.screen)
+        self.grille.draw_grille(self)
               
         #affiche les objets magiques dans la grille
         self.item.draw_item(self.screen)

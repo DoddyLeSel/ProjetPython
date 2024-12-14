@@ -78,15 +78,15 @@ class Grille:
             fumee.draw_case(screen)
         
         
-    def draw_grille(self, screen):
+    def draw_grille(self, game):
         
         for selected_case in self.grille :
-            selected_case.draw_case(screen)
+            selected_case.draw_case(game)
             
         for x in range(0, self.width, CELL_SIZE):
             for y in range(0, self.height, CELL_SIZE):
                 rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
-                pygame.draw.rect(screen, WHITE, rect, 1)
+                pygame.draw.rect(game.screen, WHITE, rect, 1)
             
         pygame.display.flip()
 

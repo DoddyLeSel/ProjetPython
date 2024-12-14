@@ -32,7 +32,7 @@ class Warwick(Unit):
         self.skill_3_img = "img/WarwickE.png"
         
         
-    def skill_1(self):
+    def skill_1(self, game):
         
         #Compétence : Dents de la Bête, attaque à 1 case de distance et rend de la vie
         
@@ -49,10 +49,10 @@ class Warwick(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y, positions)
-        list_cursor = cursor.move_cursor()
+        list_cursor = cursor.move_cursor(game)
         
         #Applique les effets de la compétence
-        hit = self.calcul_damage(list_cursor, puissance)
+        hit = self.calcul_damage(game, list_cursor, puissance)
         
         if hit :
             self.health += heal
@@ -60,7 +60,7 @@ class Warwick(Unit):
             if self.health > self.max_health :
                 self.health = self.max_health
 
-    def skill_2(self):
+    def skill_2(self, game):
         
         #Compétence : Traque sanguinaire, augmente ses PM de 3 points et double sa stat d'attaque
         
@@ -77,7 +77,7 @@ class Warwick(Unit):
         self.own_boost_PM = True
         self.own_boost_attack = True
         
-    def skill_3(self):
+    def skill_3(self, game):
         
         #Compétence : Hurlement Bestial, étourdi les ennemis à 1 case de distance autour de lui
         
@@ -91,4 +91,4 @@ class Warwick(Unit):
         #######################################
 
         #Applique les effets de la compétence
-        self.stun(positions)
+        self.stun(game, positions)
