@@ -23,7 +23,7 @@ class MissFortune(Unit):
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
 
-    def skill_1(self, game):
+    def skill_1(self):
         #Compétence : Doublé, attaque simple à 3 de distance
         
         #######################################
@@ -40,13 +40,13 @@ class MissFortune(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y, positions)
-        list_cursor = cursor.move_cursor(game)
+        list_cursor = cursor.move_cursor()
         
         #Applique les effets de la compétence
-        self.calcul_damage(game, list_cursor, puissance)
+        self.calcul_damage(list_cursor, puissance)
 
 
-    def skill_2(self, game):
+    def skill_2(self):
         #Compétence : Fanfaronne, double les PM
         
         #######################################
@@ -60,7 +60,7 @@ class MissFortune(Unit):
 
         self.own_boost_PM = True
 
-    def skill_3(self, game):
+    def skill_3(self):
         #Compétence : Pluie de Balles, attaque en zone à 3 de distance et ralenti les ennemis dans la zone
         
         #######################################
@@ -85,8 +85,8 @@ class MissFortune(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y, positions, zone=zone)
-        list_cursor = cursor.move_cursor(game)
+        list_cursor = cursor.move_cursor()
         
         #Applique les effets de la compétence
-        self.calcul_damage(game, list_cursor, puissance)
-        self.slow(game, list_cursor, slow)
+        self.calcul_damage(list_cursor, puissance)
+        self.slow(list_cursor, slow)

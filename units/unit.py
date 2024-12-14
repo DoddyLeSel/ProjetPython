@@ -121,7 +121,7 @@ class Unit(ABC):
                     # Vérifiez que les coordonnées sont valides dans la grille
                     if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE : #and (i,j) != (self.x,self.y):
                         
-                        #pour former un lesange 
+                        #pour former un losange 
                         #if i == self.x or j == self.y:
                         #if abs(i - self.x) + abs(j - self.y) <= self.PM:
                         if abs(i - self.x) + abs(j - self.y) <= self.PM :
@@ -212,11 +212,11 @@ class Unit(ABC):
             self.PM_origin = self.PM_origin - 1
         
     
-    def calcul_damage(self, game, zone_degats, puissance):
+    def calcul_damage(self, zone_degats, puissance):
         
         hit = False
         
-        for unit in game.player_1_units + game.player_2_units :
+        for unit in Game.instance.player_1_units + Game.instance.player_2_units :
             
             if (unit.x, unit.y) in zone_degats and unit.team != self.team :
                 unit.health -= puissance
@@ -225,21 +225,21 @@ class Unit(ABC):
         return True
 
 
-    def stun(self, game, zone_stun):
+    def stun(self, zone_stun):
         
         hit = False
         
-        for unit in game.player_1_units + game.player_2_units :
+        for unit in Game.instance.player_1_units + Game.instance.player_2_units :
             
             if (unit.x, unit.y) in zone_stun and unit.team != self.team :
                 unit.stunt = True
                 hit = True
                 
-    def slow(self, game, zone_slow, slow):
+    def slow(self, zone_slow, slow):
         
         hit = False
         
-        for unit in game.player_1_units + game.player_2_units :
+        for unit in Game.instance.player_1_units + Game.instance.player_2_units :
             
             if (unit.x, unit.y) in zone_slow and unit.team != self.team :
                 unit.PM += slow

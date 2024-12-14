@@ -18,13 +18,12 @@ class Warwick(Unit):
         DAMAGE = 20
         VIE_MAX = 100
         PM = 4
-        self.PM = PM
         image = "img/Warwick2.png"
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
 
-    def skill_1(self, game):
+    def skill_1(self):
         
         #Compétence : Dents de la Bête, attaque à 1 case de distance et rend de la vie
         
@@ -42,10 +41,10 @@ class Warwick(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y, positions)
-        list_cursor = cursor.move_cursor(game)
+        list_cursor = cursor.move_cursor()
         
         #Applique les effets de la compétence
-        hit = self.calcul_damage(game, list_cursor, puissance)
+        hit = self.calcul_damage(list_cursor, puissance)
         
         if hit :
             self.health += heal
@@ -53,7 +52,7 @@ class Warwick(Unit):
             if self.health > self.max_health :
                 self.health = self.max_health
 
-    def skill_2(self, game):
+    def skill_2(self):
         
         #Compétence : Traque sanguinaire, augmente ses PM de 3 points et double sa stat d'attaque
         
@@ -71,7 +70,7 @@ class Warwick(Unit):
         self.own_boost_PM = True
         self.own_boost_attack = True
         
-    def skill_3(self, game):
+    def skill_3(self):
         
         #Compétence : Hurlement Bestial, étourdi les ennemis à 1 case de distance autour de lui
         
@@ -86,4 +85,4 @@ class Warwick(Unit):
         #######################################
 
         #Applique les effets de la compétence
-        self.stun(game, positions)
+        self.stun(positions)

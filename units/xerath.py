@@ -23,7 +23,7 @@ class Xerath(Unit):
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
 
-    def skill_1(self, game):
+    def skill_1(self):
         
         #Compétence : Rayon Arcanique,
         
@@ -43,13 +43,13 @@ class Xerath(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y,positions, zone=zone)
-        list_cursor = cursor.move_cursor(game)
+        list_cursor = cursor.move_cursor()
         
         #Applique les effets de la compétence
-        hit = self.calcul_damage(game, list_cursor, puissance)
+        self.calcul_damage(list_cursor, puissance)
 
 
-    def skill_2(self, game):
+    def skill_2(self):
         
         #Compétence : Oeil de la Destruction, attaque à 5 de distance sur une petite zone
         
@@ -69,12 +69,12 @@ class Xerath(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y,positions, zone=zone)
-        list_cursor = cursor.move_cursor(game)
+        list_cursor = cursor.move_cursor()
         
         #Applique les effets de la compétence
-        hit = self.calcul_damage(game, list_cursor, puissance)
+        self.calcul_damage(list_cursor, puissance)
         
-    def skill_3(self, game):
+    def skill_3(self):
         
         #Compétence : Orbe d'électrocution, étourdi un ennemi
         
@@ -93,8 +93,8 @@ class Xerath(Unit):
         
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y,positions)
-        list_cursor = cursor.move_cursor(game)
+        list_cursor = cursor.move_cursor()
         
         #Applique les effets de la compétence
-        hit = self.calcul_damage(game, list_cursor, puissance)
-        self.stun(game, list_cursor)
+        self.calcul_damage(list_cursor, puissance)
+        self.stun(list_cursor)

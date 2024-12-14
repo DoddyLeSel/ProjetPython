@@ -31,10 +31,12 @@ class Cursor:
         self.positions = positions              #Positions que peut prendre le curseur
         self.zone = zone                        #Taille de curseur (1 case par défaut)
         self.zone_special = zone
-    def move_cursor(self, game):                #Déplace le curseur à l'aide des événements pygame et renvoi la liste de la ou des positions finales du curseur (selon la taille du curseur)
+
+
+    def move_cursor(self):                #Déplace le curseur à l'aide des événements pygame et renvoi la liste de la ou des positions finales du curseur (selon la taille du curseur)
         
         self.afficher_position(game.screen)
-        game.unit_flip_display()
+        Game.instance.unit_flip_display()
         pygame.display.flip()
         
         while True :
@@ -59,7 +61,7 @@ class Cursor:
                     
                     self.zone_spe()
                     
-                    self.draw_cursor(game)
+                    self.draw_cursor()
                 
                     if event.key == pygame.K_RETURN:
                         l=[]
@@ -68,28 +70,28 @@ class Cursor:
                         return l
                     
                     
-    def draw_cursor(self, game):              #Affiche le curseur
+    def draw_cursor(self):              #Affiche le curseur
         
-        game.grille.draw_grille(game.screen)
+        Game.instance.grille.draw_grille(Game.instance.screen)
         
-        self.afficher_position(game.screen)
+        self.afficher_position(Game.instance.screen)
         
         for pos in self.zone :
             if 0 <= (self.x+pos[0]) < GRID_SIZE and 0 <= (self.y+pos[1]) < GRID_SIZE :
-                pygame.draw.rect(game.screen, self.color, ((self.x+pos[0])*CELL_SIZE, (self.y+pos[1])*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                pygame.draw.rect(game.screen, WHITE,((self.x+pos[0])*CELL_SIZE, (self.y+pos[1])*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                pygame.draw.rect(Game.instance.screen, self.color, ((self.x+pos[0])*CELL_SIZE, (self.y+pos[1])*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                pygame.draw.rect(Game.instance.screen, WHITE,((self.x+pos[0])*CELL_SIZE, (self.y+pos[1])*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
             
-        game.unit_flip_display()
+        Game.instance.unit_flip_display()
         
         pygame.display.flip()
         
 
-    def afficher_position(self, screen):           #Affiche la zone d'action du curseur
+    def afficher_position(self):           #Affiche la zone d'action du curseur
         
         for pos in self.positions :
             if pos != (self.x_origin, self.y_origin) and 0 <= pos[0] < GRID_SIZE and 0 <= pos[1] < GRID_SIZE:
-                pygame.draw.rect(screen, self.color2, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                pygame.draw.rect(screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                pygame.draw.rect(Game.instance.screen, self.color2, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                pygame.draw.rect(Game.instance.screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
 
 
     def zone_spe(self):

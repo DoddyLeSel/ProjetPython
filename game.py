@@ -26,6 +26,8 @@ class Game:
         La liste des unités du joueur 2.
     """
     
+    instance = None
+    
     def __init__(self, screen):
         """
         Construit le jeu avec la surface de la fenêtre.
@@ -41,20 +43,18 @@ class Game:
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
-        
 
         self.grille.activer_fumee(3, 10, 100)
 
         
         self.grille.activer_fumee(3, 4, 100)
-
-                
-        
+                      
         self.grille.mettre_a_jour_fumees()
         
         self.item= Item(5) #creer les objets magique (Rod of ages)
         self.item.generer()
         
+        self.instance = self
         
     def handle_turn(self):
         
@@ -119,21 +119,21 @@ class Game:
                             
                             if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_1(self)
+                                selected_unit.skill_1()
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
                             
                             if event.key == pygame.K_z and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_2(self)
+                                selected_unit.skill_2()
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True
                                 
                             if event.key == pygame.K_e and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_3(self)
+                                selected_unit.skill_3()
                                 self.unit_remove()             
                                 self.flip_display()
                                 selected_unit.skill_used = True                                
