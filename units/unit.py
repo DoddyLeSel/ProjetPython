@@ -73,6 +73,7 @@ class Unit(ABC):
         self.returnn = False
         self.mouvement = False
         self.stunt = False
+        self.has_item = False #Savoir si le perso a collecté un objet magique 
         
         self.own_boost_PM = False
         self.own_boost_attack = False
@@ -99,10 +100,13 @@ class Unit(ABC):
 
    
     def move(self):
+
+        
+
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
             self.y = self.y_PM
-        
+    
         #reinitialiser les listes des posistions une fois le perso a changé de place
         self.positions = []
         self.pos_riv=[]
@@ -110,7 +114,7 @@ class Unit(ABC):
         
 
 
-    def draw_PM (self, screen, grille) : 
+    def draw_PM (self, screen, grille,pos_unit) : 
         #dessiner les rect LIGHT_YELLOW (zone de mouvement possible)     
        
         if self.is_selected and self.returnn ==False : 
@@ -120,12 +124,17 @@ class Unit(ABC):
                     if 0 <= i < GRID_SIZE and 0 <= j < GRID_SIZE : #and (i,j) != (self.x,self.y):
                         
                         #pour former un losange 
-                        #if i == self.x or j == self.y:
-                        #if abs(i - self.x) + abs(j - self.y) <= self.PM:
                         if abs(i - self.x) + abs(j - self.y) <= self.PM :
+
+                            #Si les cases sont pas des murs
                             for case in grille : 
                                 if case.x==i and case.y==j :
-                                    if case.is_accessible == True:
+
+                                    #verifier si la case est accessible et n'est pas occupé par une autre unité
+                                    pos_unit_temp = pos_unit.copy() # cree une copie temporaire de self.pos_unit
+                                    pos_unit_temp.discard((self.x, self.y)) #supprime l'unite elle meme de la copie temporaire pour éviter qu'il soit vérifié
+                                    
+                                    if case.is_accessible == True and not((i,j) in pos_unit_temp ):
 
                                         self.positions.append((i,j)) #rempli la liste des positions des cases accesibles
 
@@ -167,14 +176,14 @@ class Unit(ABC):
                     self.pos_riv.remove((x,y)) 
 
 
-    def draw(self, screen, grille):
+    def draw(self, screen, grille,pos_unit):
         
         #Affiche l'unité sur l'écran
     
         #Affiche les rectangles de déplacement
         if self.mouvement == True :
             
-            self.draw_PM(screen, grille)
+            self.draw_PM(screen, grille,pos_unit)
         
         #Affiche l'image de l'unité
         image = pygame.image.load(self.image).convert_alpha()
@@ -208,7 +217,7 @@ class Unit(ABC):
   
         if self.passage_riv == True : #Diminue la valeur de PM si il est passé par une riviere                    
             self.PM_origin = self.PM_origin - 1
-        
+        self.passage_riv = False
     
     def calcul_damage(self, game, zone_degats, puissance):
         

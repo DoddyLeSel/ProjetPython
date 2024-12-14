@@ -49,9 +49,9 @@ class Game:
                       
         self.grille.mettre_a_jour_fumees()
         
-        self.item= Item(5) #creer les objets magique (Rod of ages)
-        self.item.generer()
+        self.item= Item() #creer les objets magique (Rod of ages)
         
+        self.pos_unit = {(6,1),(7,1),(8,1),(6,14),(7,14),(8,14)} #set des positions initiales de toutes les unités
         
     def handle_turn(self):
         
@@ -88,6 +88,9 @@ class Game:
                         # Gestion des touches du clavier
                         
                         if event.type == pygame.KEYDOWN:
+
+                            if event.key == pygame.K_o and selected_unit.has_item == True: # utiliser l'objet magique en appuyant sur "o"
+                                self.item.recover(selected_unit) 
                             
                             if event.key == pygame.K_p:
                                 selected_unit.mouvement = True # appuyer sur p pour afficher les mouvements possibles
@@ -107,10 +110,12 @@ class Game:
                             
                             
                             if event.key == pygame.K_RETURN:   #on a choisie une position
+                                self.pos_unit.discard((selected_unit.x,selected_unit.y)) #supprimer l'ancienne coord de l'unité
                                 selected_unit.move()           #change la valeur des coord de x et y cad l image 
+                                self.pos_unit.add((selected_unit.x,selected_unit.y)) #ajouter la nouvelle coord de l'unité
                                 selected_unit.returnn = True   #on a appuye sur entree
                                     
-                                self.item.is_collected(selected_unit.x, selected_unit.y)
+                                self.item.is_collected(selected_unit,selected_unit.x, selected_unit.y)
                                 
                             self.flip_display()
 
@@ -145,6 +150,8 @@ class Game:
                                 selected_unit.mouvement = False #reinit la touche P
                                 selected_unit.reinitialiser_PM() #reinit les valeurs des PM et les modifier si y a eu un passage par une riviere
                                 selected_unit.fin_boost()
+    
+                                
                                   
                                 
                                 
@@ -176,7 +183,7 @@ class Game:
             if unit.is_selected :
                 pygame.draw.rect(self.screen, YELLOW, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
                 
-            unit.draw(self.screen,self.grille.grille)
+            unit.draw(self.screen,self.grille.grille,self.pos_unit)
             
     def unit_remove(self):
         for unit in self.player_1_units + self.player_2_units :

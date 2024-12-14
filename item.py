@@ -1,27 +1,20 @@
 import pygame
-import random
-
-from units import *
 from constante import *
-from abc import ABC, abstractmethod
 
 
-class Item():
+
+
+
+#Des objets magiques que les persos peuvent collecter et utiliser en appuyant sur la touche "o"
+class Item:
     
-    def __init__(self, nb_items):
+    def __init__(self):
         
         
-        #Hérite de la classe Unit
-        self.nb_items = nb_items
-        self.positions = set()
+        #Hérite de la classe Case
+        self.positions = {(0,7),(8,7),(15,6),(15,10)}
         
     
-    def generer(self):    
-        while len(self.positions) < self.nb_items:
-            x = random.randint(0, GRID_SIZE - 1)
-            y = random.randint(0, GRID_SIZE - 1)
-            
-            self.positions.add((x, y))
 
 
     def draw_item(self, screen):
@@ -32,11 +25,18 @@ class Item():
             image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
             screen.blit(image, (x * CELL_SIZE,y * CELL_SIZE))
     
-    def is_collected (self,x,y):
+    def is_collected (self,unit,x,y):
         
         if (x,y) in self.positions : #verifier si le perso est sur la case de l'objet
-            self.has_item = True #le perso possède un objet 
+            unit.has_item = True #le perso possède un objet 
             self.positions.discard((x,y)) #supprimer les coord de l objet du set
-        
+
+    def recover(self,unit)   :
+
+        if unit.health < 100 :
+            unit.health = unit.health +20
+        else :
+            unit.health = 100    
             
-        
+
+
