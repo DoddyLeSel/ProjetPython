@@ -11,3 +11,4 @@ class Riviere(Case):
         super().__init__(x, y, image)
         
         self.is_accessible = True
+        self.is_riv = True

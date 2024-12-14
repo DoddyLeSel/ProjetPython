@@ -59,9 +59,10 @@ class Game:
     def handle_turn(self):
         
         #Tour du joueur 1 puis tour du joueur 2
-        all_units = list(zip(self.player_1_units, self.player_2_units))  # Paire des unités
-        for perso  in all_units :
-            for selected_unit in perso :
+        for i in [0,1]:
+            player_list = [self.player_1_units, self.player_2_units]
+            for selected_unit in player_list[i] :
+                
 
                 # Tant que l'unité n'a pas terminé son tour
                 has_acted = False
@@ -91,7 +92,7 @@ class Game:
                         if event.type == pygame.KEYDOWN:
                             
                             if event.key == pygame.K_p:
-                                selected_unit.mouvement = True #on veut afficher les mouvement possibles
+                                selected_unit.mouvement = True # appuyer sur p pour afficher les mouvements possibles
                             
                             # Déplacement (touches fléchées)
                             dx, dy = 0, 0
@@ -110,7 +111,7 @@ class Game:
                             if event.key == pygame.K_RETURN:   #on a choisie une position
                                 selected_unit.move()           #change la valeur des coord de x et y cad l image 
                                 selected_unit.returnn = True   #on a appuye sur entree
-                                
+                                    
                                 self.item.is_collected(selected_unit.x, selected_unit.y)
                                 
                             self.flip_display()
@@ -142,9 +143,14 @@ class Game:
 
                                 has_acted = True
                                 selected_unit.is_selected = False
-                                selected_unit.returnn = False #reenit ENTREE
-                                selected_unit.mouvement = False #reenit la touche P
+                                selected_unit.returnn = False #reinit la touche ENTREE
+                                selected_unit.mouvement = False #reinit la touche P
+                                selected_unit.reinitialiser_PM() #reinit les valeurs des PM et les modifier si y a eu un passage par une riviere
                                 selected_unit.fin_boost()
+                                  
+
+                                    
+                                
                                 
                                 
     def flip_display(self):
@@ -176,7 +182,7 @@ class Game:
             if unit.is_selected :
                 pygame.draw.rect(self.screen, YELLOW, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
                 
-            unit.draw(self.screen)
+            unit.draw(self.screen,self.grille.grille)
             
     def unit_remove(self):
         for unit in self.player_1_units + self.player_2_units :

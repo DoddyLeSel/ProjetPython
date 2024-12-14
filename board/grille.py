@@ -13,10 +13,11 @@ class Grille:
         self.height = CELL_SIZE * GRID_SIZE 
         self.grille = self.grille_init()
         self.fumees=[]
+        self.tableau=[]
 
     def grille_init(self):
         
-        tableau = [[2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 1 pour Terrain
+        self.tableau = [[2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 1 pour Terrain
                    [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 2 pour Mur
                    [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3],      # 3 pour Rivière
                    [2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 3, 3, 3, 3, 3],
@@ -35,18 +36,19 @@ class Grille:
         
         grille = []
         
-        for i in range(len(tableau)) :
-            for j in range(len(tableau[i])) :
+        for i in range(len(self.tableau)) :
+            for j in range(len(self.tableau[i])) :
                 
-                if tableau[i][j] == 1:
+                if self.tableau[i][j] == 1:
                     grille.append(Terrain(j,i))
                     
-                elif tableau[i][j] == 2:
+                elif self.tableau[i][j] == 2:
                     grille.append(Mur(j,i))
                     
-                elif tableau[i][j] == 3:
+                elif self.tableau[i][j] == 3:
                     grille.append(Riviere(j,i))
 
+        
         return grille
     
     def activer_fumee(self, x, y, duree):

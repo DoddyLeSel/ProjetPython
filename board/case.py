@@ -10,6 +10,8 @@ class Case(ABC):
         self.y = y
         self.image = image
         self.accessible = True
+        self.is_riv = False
+        
         
     def draw_case(self, screen) :
         image = pygame.image.load(self.image).convert_alpha()
