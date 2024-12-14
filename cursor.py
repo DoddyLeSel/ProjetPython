@@ -3,6 +3,8 @@ import pygame
 from units import *
 from constante import *
 
+from game import *
+
 class Cursor:
     """
     Construit un curseur
@@ -35,7 +37,7 @@ class Cursor:
 
     def move_cursor(self):                #Déplace le curseur à l'aide des événements pygame et renvoi la liste de la ou des positions finales du curseur (selon la taille du curseur)
         
-        self.afficher_position(game.screen)
+        self.afficher_position()
         Game.instance.unit_flip_display()
         pygame.display.flip()
         
@@ -90,8 +92,8 @@ class Cursor:
         
         for pos in self.positions :
             if pos != (self.x_origin, self.y_origin) and 0 <= pos[0] < GRID_SIZE and 0 <= pos[1] < GRID_SIZE:
-                pygame.draw.rect(Game.instance.screen, self.color2, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                pygame.draw.rect(Game.instance.screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
+                pygame.draw.rect(game.instance.screen, self.color2, (pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                pygame.draw.rect(game.instance.screen, WHITE,(pos[0]*CELL_SIZE, pos[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE),1)
 
 
     def zone_spe(self):

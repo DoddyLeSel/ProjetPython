@@ -22,13 +22,21 @@ class MissFortune(Unit):
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
-
+        self.skill_1_nom = "Doublé"
+        self.skill_1_img = "img/MissFortuneA.png"
+        
+        self.skill_2_nom = "Fanfaronne"
+        self.skill_2_img = "img/MissFortuneZ.png"
+        
+        self.skill_3_nom = "Pluie de Balles"
+        self.skill_3_img = "img/MissFortuneE.png"
+        
+        
     def skill_1(self):
         #Compétence : Doublé, attaque simple à 3 de distance
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Doublé"
         puissance = 30 + 0.1 * self.attack_power
         portee = 3
         positions = [(self.x, self.y)]
@@ -51,7 +59,6 @@ class MissFortune(Unit):
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Fanfaronne"
         boost_PM = self.PM
         #######################################
         
@@ -65,7 +72,6 @@ class MissFortune(Unit):
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Pluie de Balles"
         puissance = 10 + 0.1 * self.attack_power
         portee = 3
         positions = [(self.x, self.y)]

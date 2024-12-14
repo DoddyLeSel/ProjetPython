@@ -1,14 +1,12 @@
 import pygame
 import random
 
-
-
-from units import*
+from units import *
 from constante import *
 from abc import ABC, abstractmethod
 
 
-class Item(Unit):
+class Item():
     
     def __init__(self, nb_items):
         

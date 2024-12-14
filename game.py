@@ -6,10 +6,12 @@ from board import *
 
 from cursor import *
 from constante import *
+from menu_lateral import *
 
 from trap import *
 from item import*
 
+global game
 
 class Game:
     """
@@ -53,8 +55,7 @@ class Game:
         
         self.item= Item(5) #creer les objets magique (Rod of ages)
         self.item.generer()
-        
-        self.instance = self
+
         
     def handle_turn(self):
         
@@ -63,6 +64,7 @@ class Game:
             player_list = [self.player_1_units, self.player_2_units]
             for selected_unit in player_list[i] :
                 
+                #Menu_Lateral(selected_unit).draw_menu()
 
                 # Tant que l'unité n'a pas terminé son tour
                 has_acted = False
@@ -158,8 +160,7 @@ class Game:
 
         # Affiche la grille
         self.grille.draw_grille(self.screen)
-      
-        
+              
         #affiche les objets magiques dans la grille
         self.item.draw_item(self.screen)
  
@@ -206,7 +207,7 @@ def main():
 
     # Instanciation du jeu
     game = Game(screen)
-
+    
     # Boucle principale du jeu, un tour comprend les 2 joueurs
     while True:
         game.handle_turn()

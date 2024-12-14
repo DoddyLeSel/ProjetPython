@@ -81,6 +81,7 @@ class Unit(ABC):
         self.positions = [] #liste contenant les positions accesibles seulement
         self.pos_riv=[] #liste contenant les positions des cases rivieres
 
+
     def move_PM(self, dx, dy):
         """Déplace le carre de selection de dx, dy."""
         if self.x - self.PM <= self.x_PM + dx <= self.x + self.PM and self.y - self.PM <= self.y_PM + dy <= self.y + self.PM and 0 <= self.x_PM + dx < GRID_SIZE and 0 <= self.y_PM + dy < GRID_SIZE and self.returnn ==False:
@@ -96,10 +97,7 @@ class Unit(ABC):
                 if (self.x_PM , self.y_PM ) in self.pos_riv : #S'il passe par la riviere le PM diminue de 1
                     self.passage_riv = True
 
-
-                
-    
-    
+   
     def move(self):
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
@@ -174,7 +172,7 @@ class Unit(ABC):
         #Affiche l'unité sur l'écran
     
         #Affiche les rectangles de déplacement
-        if self.mouvement ==True :
+        if self.mouvement == True :
             
             self.draw_PM(screen, grille)
         

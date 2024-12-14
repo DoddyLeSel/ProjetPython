@@ -22,14 +22,22 @@ class Xerath(Unit):
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
+        self.skill_1_nom = "Rayon Arcanique"
+        self.skill_1_img = "img/XerathA.png"
+        
+        self.skill_2_nom = "Oeil de la destruction"
+        self.skill_2_img = "img/XerathZ.png"
+        
+        self.skill_3_nom = "Orbe d'électrocution"
+        self.skill_3_img = "img/XerathE.png"
+
 
     def skill_1(self):
         
-        #Compétence : Rayon Arcanique,
+        #Compétence : Rayon Arcanique, lance un rayon qui fait des dégâts sur plusieurs cases en ligne
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Rayon Arcanique"
         puissance = 20 + 0.1 * self.attack_power
         portee = 5
         positions = [(self.x, self.y)]
@@ -55,7 +63,6 @@ class Xerath(Unit):
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Oeil de la destruction"
         puissance = 20 + 0.1 * self.attack_power
         portee = 5
         positions = [(self.x, self.y)]
@@ -80,7 +87,6 @@ class Xerath(Unit):
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Oeil de la destruction"
         puissance = 5 + 0.1 * self.attack_power
         portee = 4
         positions = [(self.x, self.y)]

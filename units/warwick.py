@@ -18,18 +18,26 @@ class Warwick(Unit):
         DAMAGE = 20
         VIE_MAX = 100
         PM = 4
-        image = "img/Warwick2.png"
+        image = "img/Warwick.png"
         
         super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
-
+        self.skill_1_nom = "Dents de la Bête"
+        self.skill_1_img = "img/WarwickA.png"
+        
+        self.skill_2_nom = "Traque sanguinaire"
+        self.skill_2_img = "img/WarwickZ.png"
+        
+        self.skill_3_nom = "Hurlement Bestial"
+        self.skill_3_img = "img/WarwickE.png"
+        
+        
     def skill_1(self):
         
         #Compétence : Dents de la Bête, attaque à 1 case de distance et rend de la vie
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Dents de la Bête"
         puissance = 20 + 0.5 * self.attack_power
         portee = 1
         positions = [(self.x, self.y)]
@@ -58,7 +66,6 @@ class Warwick(Unit):
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Traque Sanguinaire"
         boost_PM = 3
         boost_attack = self.attack_power
         #######################################
@@ -76,7 +83,6 @@ class Warwick(Unit):
         
         #######################################
         #Défini les paramètres de la compétence
-        nom = "Hurlement Bestial"
         portee = 1
         positions = [(self.x, self.y)]
         for i in range(-portee,portee +1):
