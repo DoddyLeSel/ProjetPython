@@ -259,11 +259,11 @@ class Unit(ABC):
                 game.messages.append(unit.name + " s'est fait ralentir de " + str(abs(slow)) + " PM")
 
 
-     def heal(self, game, heal):
+    def heal(self, game, heal):
          
         self.health += heal
         
-        game.messages.append(unit.name + " s'est soigné de " + str(heal))
+        game.messages.append(self.name + " s'est soigné de " + str(heal))
         
         if self.health > self.max_health :
                 self.health = self.max_health
