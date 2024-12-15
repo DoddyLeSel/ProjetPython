@@ -10,13 +10,9 @@ class Item:
     
     def __init__(self):
         
-        
-        #Hérite de la classe Case
         self.positions = {(0,7),(8,7),(15,6),(15,10)}
         
     
-
-
     def draw_item(self, screen):
         
         for  x, y in self.positions:
