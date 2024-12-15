@@ -61,7 +61,7 @@ class Unit(ABC):
         Lance le sort 3
     """
 
-    def __init__(self, x, y, name, health, max_health, attack_power, PM, image, team):
+    def __init__(self, x, y, name, health, max_health, attack_power, PM, image, team,game):
         """
         Construit une unité avec une position, une santé, une puissance d'attaque et une équipe.
 
@@ -108,7 +108,7 @@ class Unit(ABC):
         self.passage_riv = False
         self.positions = [] #liste contenant les positions accesibles seulement
         self.pos_riv=[] #liste contenant les positions des cases rivieres
-
+        self.game=game
 
     def move_PM(self, dx, dy):
         """Déplace le carre de selection de dx, dy."""
@@ -133,6 +133,8 @@ class Unit(ABC):
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
             self.y = self.y_PM
+        # Appel de la méthode pour vérifier si l'unité se trouve sur une case Domag
+            self.game.grille.cas_domage(self)
     
         #reinitialiser les listes des posistions une fois le perso a changé de place
         self.positions = []
@@ -205,9 +207,9 @@ class Unit(ABC):
 
     def draw(self, screen, grille, pos_unit):
 
-        """
-    Dessine l'unité uniquement si elle n'est pas recouverte par une fumée.
-    """
+        
+    #Dessine l'unité uniquement si elle n'est pas recouverte par une fumée.
+    
     # Vérifie si une fumée recouvre cette unité
         for case in grille:
             if isinstance(case, Fumee) and case.x == self.x and case.y == self.y:

@@ -7,7 +7,7 @@ from board import *
 from constante import *
 from menu_lateral import *
 
-from trap import *
+
 from item import*
 
 class Game:
@@ -37,14 +37,14 @@ class Game:
         """
         self.screen = screen
 
-        self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
+        self.player_1_units = [Warwick(6, 1, 'player_1',self), Xerath(7,1, 'player_1' ,self), MissFortune(8,1, 'player_1' ,self)]
 
-        self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,13, 'player_1'), MissFortune(8,13, 'player_1')]
+        self.player_1_units = [Warwick(6, 13, 'player_1' ,self), Xerath(7,13, 'player_1' ,self), MissFortune(8,13, 'player_1' ,self)]
 
 
-        self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
+        self.player_2_units = [Warwick(6, 14, 'player_2' ,self), Xerath(7,14, 'player_2' ,self), MissFortune(8,14, 'player_2' ,self)]
 
-        self.grille = Grille()
+        self.grille = Grille(self)
         self.grille.activer_fumee(10, 10, 3)  # Active une fumée sur la case (10, 10) pendant 3 tours
         self.grille.activer_fumee(11, 10, 3)   # Active une fumée sur la case (11, 10) pendant 3 tours
 

@@ -2,35 +2,40 @@ from .mur import *
 from .riviere import *
 from .terrain import *
 from .fumee import *
+from .domage import *
 
 from constante import *
 
 class Grille:
     
-    def __init__(self):
+    def __init__(self,game):
         
         self.width = CELL_SIZE * GRID_SIZE 
         self.height = CELL_SIZE * GRID_SIZE 
         self.grille = self.grille_init()
         self.fumees=[]
         self.tableau=[]
+        self.units = []  # Liste d'unités
+    def ajouter_unite(self, x, y, name, health, max_health, attack_power, PM, image, team):
+        unit = Unit(x, y, name, health, max_health, attack_power, PM, image, team, self.game)
+        self.units.append(unit)
 
     def grille_init(self):
         
         self.tableau = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 1 pour Terrain
-                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 2 pour Mur
+                        [1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1],      # 2 pour Mur
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 3 pour Rivière
                         [1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                         [1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
         
@@ -47,6 +52,8 @@ class Grille:
                     
                 elif self.tableau[i][j] == 3:
                     grille.append(Riviere(j,i))
+                elif self.tableau[i][j] == 4:
+                    grille.append(Domag(j,i))
 
         
         return grille
@@ -71,6 +78,11 @@ class Grille:
                     fumee_a_supprimer.append(case)
         for fumee in fumee_a_supprimer:
             self.grille.remove(fumee)
+    def cas_domage(self, unit):
+        # Vérifie si l'unité se trouve sur une case Domag
+        for case in self.grille:
+            if isinstance(case, Domag) and case.x == unit.x and case.y == unit.y:
+                case.infliger_domage(unit)  # Infliger les dégâts si l'unité est sur la case Domag
     
         
         

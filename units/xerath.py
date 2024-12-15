@@ -12,7 +12,7 @@ class Xerath(Unit):
         
     team : 'player_1' ou 'player_2', défini l'équipe de l'unité.
     """
-    def __init__(self, x, y, team):
+    def __init__(self, x, y, team,game):
         
         NOM = "Xerath"             #Nom de l'unité
         VIE = 1                    #Vie actuelle
@@ -21,7 +21,7 @@ class Xerath(Unit):
         PM = 2                     #Point de mouvement
         image = "img/Xerath.png"   #Lien du sprite de l'unité
         
-        super().__init__(x, y, NOM, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
+        super().__init__(x, y, NOM, VIE, VIE_MAX, DAMAGE, PM, image, team,game)   #Hérite de la classe Unit
         
         self.skill_1_nom = "Rayon Arcanique"           #Nom du sort 1
         self.skill_1_img = "img/XerathA.png"           #Lien de l'icone du sort 1
