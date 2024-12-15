@@ -6,7 +6,7 @@ class Fumee(Case):
     
     def __init__(self,x,y,duree):
         
-        image="img/fumé.png"
+        image="img/fumee.png"
         super().__init__(x, y, image)
         self.accessible= True
         self.duree=duree #duré pour laquelle, la fumé est active

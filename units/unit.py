@@ -15,12 +15,18 @@ class Unit(ABC):
         La position x de l'unité sur la grille.
     y : int
         La position y de l'unité sur la grille.
+    name : str
+        Nom de l'unité
     health : int
         La santé de l'unité.
     max_health : int
         La santé maximale de l'unité
     attack_power : int
         La puissance d'attaque de l'unité.
+    PM : int
+        Point de mouvement de l'unité
+    image : str
+        Lien du sprite représentant l'unité
     team : str
         L'équipe de l'unité ('player' ou 'enemy').
     is_selected : bool
@@ -32,8 +38,26 @@ class Unit(ABC):
         Déplace l'unité de dx, dy.
     attack(target)
         Attaque une unité cible.
-    draw(screen)
+    draw(screen, grille, pos_unit)
         Dessine l'unité sur la grille.
+    draw_health_bar(screen)
+        Dessine la barre de vie des personnages
+    calcul_damage(game, zone_degats, puissance)
+        Calcule les dégats pris par une ou plusieurs unités
+    slow(game, zone_slow, slow)
+        Ralenti les unités dans la zone de ralentissement
+    stun(game, zone_stun)
+        Etourdi les ennemis dans la zone d'étourdissement
+    heal(game, heal)
+        Soigne l'unité
+    fin_boost(self)
+        Met fin au boosts de l'unité au tour suivant
+    skill_1()
+        Lance le sort 1
+    skill_2()
+        Lance le sort 2
+    skill_3()
+        Lance le sort 3
     """
 
     def __init__(self, x, y, name, health, max_health, attack_power, PM, image, team):
@@ -178,14 +202,14 @@ class Unit(ABC):
                     self.pos_riv.remove((x,y)) 
 
 
-    def draw(self, screen, grille,pos_unit):
+    def draw(self, screen, grille, pos_unit):
         
         #Affiche l'unité sur l'écran
     
         #Affiche les rectangles de déplacement
         if self.mouvement == True :
             
-            self.draw_PM(screen, grille,pos_unit)
+            self.draw_PM(screen, grille, pos_unit)
         
         #Affiche l'image de l'unité
         image = pygame.image.load(self.image).convert_alpha()
@@ -220,7 +244,8 @@ class Unit(ABC):
         if self.passage_riv == True : #Diminue la valeur de PM si il est passé par une riviere                    
             self.PM_origin = self.PM_origin - 1
         self.passage_riv = False
-    
+
+
     def calcul_damage(self, game, zone_degats, puissance):
         
         hit = False
@@ -281,11 +306,14 @@ class Unit(ABC):
         else:
             self.attack_power = self.attack_power_origin
 
+    @abstractmethod
     def skill_1(self):
         pass
     
+    @abstractmethod
     def skill_2(self):
         pass
     
+    @abstractmethod
     def skill_3(self):
         pass

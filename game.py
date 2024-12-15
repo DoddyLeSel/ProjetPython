@@ -36,7 +36,7 @@ class Game:
             La surface de la fenêtre du jeu.
         """
         self.screen = screen
-        self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
+        self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,13, 'player_1'), MissFortune(8,13, 'player_1')]
 
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
@@ -88,6 +88,8 @@ class Game:
                     # Important: cette boucle permet de gérer les événements Pygame
                     for event in pygame.event.get():
 
+                        self.unit_remove()
+                        
                         # Gestion de la fermeture de la fenêtre
                         if event.type == pygame.QUIT:
                             pygame.quit()
@@ -118,6 +120,7 @@ class Game:
                             
                             
                             if event.key == pygame.K_RETURN:   #on a choisie une position
+                                
                                 self.pos_unit.discard((selected_unit.x,selected_unit.y)) #supprimer l'ancienne coord de l'unité
                                 selected_unit.move()           #change la valeur des coord de x et y cad l image 
                                 self.pos_unit.add((selected_unit.x,selected_unit.y)) #ajouter la nouvelle coord de l'unité
@@ -166,11 +169,12 @@ class Game:
 
                                 has_acted = True
                                 selected_unit.is_selected = False
-                                selected_unit.returnn = False #reinit la touche ENTREE
-                                selected_unit.mouvement = False #reinit la touche P
-                                selected_unit.reinitialiser_PM() #reinit les valeurs des PM et les modifier si y a eu un passage par une riviere
-                                selected_unit.fin_boost()
-             # Mettre à jour les fumées après chaque tour complet
+                                selected_unit.returnn = False        #reinit la touche ENTREE
+                                selected_unit.mouvement = False      #reinit la touche P
+                                selected_unit.reinitialiser_PM()     #reinit les valeurs des PM et les modifier si y a eu un passage par une riviere
+                                selected_unit.fin_boost()            #Met fin aux boost de PM et d'attaque à la fin du tour
+                                
+        # Mettre à jour les fumées après chaque tour complet
         self.grille.mettre_a_jour_fumees()
     
                                 
@@ -210,6 +214,21 @@ class Game:
             unit.draw(self.screen,self.grille.grille,self.pos_unit)
             
     def unit_remove(self):
+        
+        font = pygame.font.Font(None, 200)
+        
+        if len(self.player_1_units) == 0 :
+            text0 = font.render("Défaite", True, WHITE)
+            text0_rect = text0.get_rect(center= pygame.draw.rect(self.screen, BLACK, (0, 0, WIDTH, HEIGHT)).center)
+            self.screen.blit(text0, text0_rect)
+            pygame.display.flip()
+        
+        elif len(self.player_2_units ) == 0 :
+            text1 = font.render("Victoire", True, WHITE)
+            text1_rect = text1.get_rect(center= pygame.draw.rect(self.screen, BLACK, (0, 0, WIDTH, HEIGHT)).center)
+            self.screen.blit(text1, text1_rect)
+            pygame.display.flip()
+            
         for unit in self.player_1_units + self.player_2_units :
             if unit.health <= 0 :
                 if unit.team == 'player_1' :
