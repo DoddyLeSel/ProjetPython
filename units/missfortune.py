@@ -14,13 +14,14 @@ class MissFortune(Unit):
     """    
     def __init__(self, x, y, team):
         
+        NOM = "Miss Fortune"
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
         PM = 3
         image = "img/MissFortune.png"
         
-        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
+        super().__init__(x, y, NOM, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
         self.skill_1_nom = "Doublé"
         self.skill_1_img = "img/MissFortuneA.png"

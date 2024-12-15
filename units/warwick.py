@@ -14,18 +14,19 @@ class Warwick(Unit):
     """
     def __init__(self, x, y, team):
         
+        NOM = "Warwick"
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
         PM = 4
         image = "img/Warwick.png"
         
-        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
+        super().__init__(x, y, NOM, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
         self.skill_1_nom = "Dents de la Bête"
         self.skill_1_img = "img/WarwickA.png"
         
-        self.skill_2_nom = "Traque sanguinaire"
+        self.skill_2_nom = "Traque Sanguinaire"
         self.skill_2_img = "img/WarwickZ.png"
         
         self.skill_3_nom = "Hurlement Bestial"
@@ -47,6 +48,7 @@ class Warwick(Unit):
         heal = 10
         #######################################
         
+        
         #Appelle un curseur pour définir l'endroit où utiliser la compétence
         cursor = Cursor(self.x, self.y, positions)
         list_cursor = cursor.move_cursor(game)
@@ -55,20 +57,19 @@ class Warwick(Unit):
         hit = self.calcul_damage(game, list_cursor, puissance)
         
         if hit :
-            self.health += heal
-            
-            if self.health > self.max_health :
-                self.health = self.max_health
+            self.heal(game, heal)
+
 
     def skill_2(self, game):
         
-        #Compétence : Traque sanguinaire, augmente ses PM de 3 points et double sa stat d'attaque
+        #Compétence : Traque Sanguinaire, augmente ses PM de 3 points et double sa stat d'attaque
         
         #######################################
         #Défini les paramètres de la compétence
         boost_PM = 3
         boost_attack = self.attack_power
         #######################################
+        
         
         #Applique les effets de la compétence
         self.PM += boost_PM
