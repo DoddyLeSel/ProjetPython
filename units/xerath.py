@@ -14,21 +14,22 @@ class Xerath(Unit):
     """
     def __init__(self, x, y, team):
         
+        NOM = "Xerath"
         VIE = 100
         DAMAGE = 20
         VIE_MAX = 100
         PM = 2
         image = "img/Xerath.png"
         
-        super().__init__(x, y, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
+        super().__init__(x, y, NOM, VIE, VIE_MAX, DAMAGE, PM, image, team)   #Hérite de la classe Unit
         
         self.skill_1_nom = "Rayon Arcanique"
         self.skill_1_img = "img/XerathA.png"
         
-        self.skill_2_nom = "Oeil de la destruction"
+        self.skill_2_nom = "Oeil de la Destruction"
         self.skill_2_img = "img/XerathZ.png"
         
-        self.skill_3_nom = "Orbe d'électrocution"
+        self.skill_3_nom = "Orbe d'Électrocution"
         self.skill_3_img = "img/XerathE.png"
 
 
@@ -83,7 +84,7 @@ class Xerath(Unit):
         
     def skill_3(self, game):
         
-        #Compétence : Orbe d'électrocution, étourdi un ennemi
+        #Compétence : Orbe d'Électrocution, étourdi un ennemi
         
         #######################################
         #Défini les paramètres de la compétence

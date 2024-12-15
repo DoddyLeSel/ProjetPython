@@ -36,7 +36,7 @@ class Game:
             La surface de la fenêtre du jeu.
         """
         self.screen = screen
-        self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
+        self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
@@ -45,11 +45,11 @@ class Game:
         self.grille.activer_fumee(11, 10, 100)   # Active une fumée sur la case (3, 4) pendant 100 tours
 
 
-        self.grille.activer_fumee(3, 10, 100)
-
+        self.menu = Menu_Lateral()
+        self.messages = []
         
-        self.grille.activer_fumee(3, 4, 100)
-                      
+        self.grille.activer_fumee(3, 10, 100)     
+        self.grille.activer_fumee(3, 4, 100)                      
         self.grille.mettre_a_jour_fumees()
         
         self.item= Item() #creer les objets magique (Rod of ages)
@@ -61,10 +61,15 @@ class Game:
         #Tour du joueur 1 puis tour du joueur 2
         for i in [0,1]:
             player_list = [self.player_1_units, self.player_2_units]
+            
+            self.messages.append("------ Nouveau Tour ------")
+            
             for selected_unit in player_list[i] :
                 
-                #Menu_Lateral(selected_unit).draw_menu()
-
+                self.messages.append("------ Nouvelle unité ------")
+                
+                self.selected_unit = selected_unit
+                
                 # Tant que l'unité n'a pas terminé son tour
                 has_acted = False
                 selected_unit.is_selected = True
@@ -125,23 +130,35 @@ class Game:
                             
                             if event.key == pygame.K_a and not selected_unit.skill_used:
                                 
-                                selected_unit.skill_1(self)
-                                self.unit_remove()             
+                                self.messages.append(selected_unit.name + " utilise son sort " + selected_unit.skill_1_nom)
                                 self.flip_display()
+                                
+                                selected_unit.skill_1(self)
+                                self.unit_remove()
+                                self.flip_display()
+                                
                                 selected_unit.skill_used = True
                             
                             if event.key == pygame.K_z and not selected_unit.skill_used:
                                 
+                                self.messages.append(selected_unit.name + " utilise son sort " + selected_unit.skill_2_nom)
+                                self.flip_display()
+                                
                                 selected_unit.skill_2(self)
                                 self.unit_remove()             
                                 self.flip_display()
+                                
                                 selected_unit.skill_used = True
                                 
                             if event.key == pygame.K_e and not selected_unit.skill_used:
                                 
+                                self.messages.append(selected_unit.name + " utilise son sort " + selected_unit.skill_3_nom)
+                                self.flip_display()
+                                
                                 selected_unit.skill_3(self)
                                 self.unit_remove()             
                                 self.flip_display()
+                                
                                 selected_unit.skill_used = True                                
                                 
                             # Fin de tour
@@ -172,6 +189,8 @@ class Game:
         # Affiche les unités
         self.unit_flip_display()
 
+        self.menu.draw_menu(self)
+        
         # Rafraîchit l'écran
         pygame.display.flip()
 
@@ -196,7 +215,9 @@ class Game:
                 if unit.team == 'player_1' :
                     self.player_1_units.remove(unit)
                 else :
-                    self.player_2_units.remove(unit) 
+                    self.player_2_units.remove(unit)
+                    
+                self.messages.append(unit.name + " est mort")
 
     
         

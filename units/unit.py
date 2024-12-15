@@ -36,7 +36,7 @@ class Unit(ABC):
         Dessine l'unité sur la grille.
     """
 
-    def __init__(self, x, y, health, max_health, attack_power, PM, image, team):
+    def __init__(self, x, y, name, health, max_health, attack_power, PM, image, team):
         """
         Construit une unité avec une position, une santé, une puissance d'attaque et une équipe.
 
@@ -58,6 +58,8 @@ class Unit(ABC):
         
         self.x_PM = self.x   #coord des rectangles de selection
         self.y_PM = self.y
+        
+        self.name = name
         
         self.health = health
         self.max_health = max_health
@@ -228,11 +230,12 @@ class Unit(ABC):
             if (unit.x, unit.y) in zone_degats and unit.team != self.team :
                 unit.health -= puissance
                 hit = True
+                game.messages.append(unit.name + " a pris " + str(puissance) + " points de dégâts" )
                 
         return True
 
 
-    def stun(self, zone_stun):
+    def stun(self, game, zone_stun):
         
         hit = False
         
@@ -241,7 +244,9 @@ class Unit(ABC):
             if (unit.x, unit.y) in zone_stun and unit.team != self.team :
                 unit.stunt = True
                 hit = True
-                
+                game.messages.append(unit.name + " s'est fait étourdir")
+
+
     def slow(self, game, zone_slow, slow):
         
         hit = False
@@ -251,7 +256,19 @@ class Unit(ABC):
             if (unit.x, unit.y) in zone_slow and unit.team != self.team :
                 unit.PM += slow
                 hit = True
+                game.messages.append(unit.name + " s'est fait ralentir de " + str(abs(slow)) + " PM")
 
+
+    def heal(self, game, heal):
+         
+        self.health += heal
+        
+        game.messages.append(self.name + " s'est soigné de " + str(heal))
+        
+        if self.health > self.max_health :
+                self.health = self.max_health
+     
+     
     def fin_boost(self) :
         
         if self.own_boost_PM :
