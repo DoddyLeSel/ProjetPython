@@ -39,20 +39,16 @@ class Game:
 
         self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
-        self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,13, 'player_1'), MissFortune(8,13, 'player_1')]
-
-
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
-        self.grille.activer_fumee(10, 10, 3)  # Active une fumée sur la case (10, 10) pendant 3 tours
-        self.grille.activer_fumee(11, 10, 3)   # Active une fumée sur la case (11, 10) pendant 3 tours
-
-
+        
         self.menu = Menu_Lateral()
         self.messages = []
         
-        self.grille.activer_fumee(3, 10, 10)     
+        self.grille.activer_fumee(10, 7, 3)  # Active une fumée sur la case (10, 10) pendant 3 tours
+        self.grille.activer_fumee(11, 7, 3)   # Active une fumée sur la case (11, 10) pendant 3 tours        
+        self.grille.activer_fumee(5, 10, 10)     
         self.grille.activer_fumee(3, 4, 10)                      
         self.grille.mettre_a_jour_fumees()
         
@@ -125,10 +121,10 @@ class Game:
                             
                             if event.key == pygame.K_RETURN:   #on a choisie une position
                                 
-                                self.pos_unit.discard((selected_unit.x,selected_unit.y)) #supprimer l'ancienne coord de l'unité
-                                selected_unit.move()           #change la valeur des coord de x et y cad l image 
-                                self.pos_unit.add((selected_unit.x,selected_unit.y)) #ajouter la nouvelle coord de l'unité
-                                selected_unit.returnn = True   #on a appuye sur entree
+                                self.pos_unit.discard((selected_unit.x,selected_unit.y))                    #supprimer l'ancienne coord de l'unité
+                                selected_unit.move()                                                        #change la valeur des coord de x et y cad l image 
+                                self.pos_unit.add((selected_unit.x,selected_unit.y))                        #ajouter la nouvelle coord de l'unité
+                                selected_unit.returnn = True                                                #on a appuye sur entree
                                     
                                 self.item.is_collected(selected_unit,selected_unit.x, selected_unit.y)
                                 

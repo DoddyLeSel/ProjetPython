@@ -15,7 +15,7 @@ class Xerath(Unit):
     def __init__(self, x, y, team):
         
         NOM = "Xerath"             #Nom de l'unité
-        VIE = 1                    #Vie actuelle
+        VIE = 100                  #Vie actuelle
         VIE_MAX = 100              #Stat de vie maximale
         DAMAGE = 20                #Stat d'attaque           
         PM = 2                     #Point de mouvement
