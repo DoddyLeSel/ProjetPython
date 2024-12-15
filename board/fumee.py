@@ -11,7 +11,7 @@ class Fumee(Case):
         self.accessible= True
         self.duree=duree #duré pour laquelle, la fumé est active
         self.est_active=True
-        self.is_accessible = True  # Ajout de cet attribut
+        self.is_accessible = True  # definir l'accessibilité pour les unités
         
     def temps_restant(self):
         
@@ -28,7 +28,7 @@ class Fumee(Case):
 
         image = pygame.image.load(self.image).convert_alpha()
         image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
-        game.screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))  # Utilisation correcte
+        game.screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))  
 
     
     

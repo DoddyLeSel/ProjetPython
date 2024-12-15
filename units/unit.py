@@ -3,6 +3,7 @@ import random
 from constante import *
 from abc import ABC, abstractmethod
 from cursor import *
+from board import *
 
 class Unit(ABC):
     """
@@ -178,22 +179,27 @@ class Unit(ABC):
                     self.pos_riv.remove((x,y)) 
 
 
-    def draw(self, screen, grille,pos_unit):
-        
-        #Affiche l'unité sur l'écran
-    
-        #Affiche les rectangles de déplacement
-        if self.mouvement == True :
-            
-            self.draw_PM(screen, grille,pos_unit)
-        
-        #Affiche l'image de l'unité
+    def draw(self, screen, grille, pos_unit):
+        """
+    Dessine l'unité uniquement si elle n'est pas recouverte par une fumée.
+    """
+    # Vérifie si une fumée recouvre cette unité
+        for case in grille:
+            if isinstance(case, Fumee) and case.x == self.x and case.y == self.y:
+                return  # Ne pas dessiner l'unité si elle est sous une fumée
+
+    # Affiche les rectangles de déplacement si applicable
+        if self.mouvement:
+            self.draw_PM(screen, grille, pos_unit)
+
+    # Affiche l'image de l'unité
         image = pygame.image.load(self.image).convert_alpha()
         image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
         screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))
-        
-        #Affiche la barre de santé
+
+    # Affiche la barre de santé
         self.draw_health_bar(screen)
+
 
 
     def draw_health_bar(self, screen):

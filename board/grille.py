@@ -53,11 +53,11 @@ class Grille:
     
     def activer_fumee(self, x, y, duree):
         """
-        Ajoute une fumée temporaire à la grille.
-        """
-        nouvelle_fumee = Fumee(x, y,duree)
-        nouvelle_fumee.duree = duree  # Définit la durée de la fumée
+    Ajoute une fumée temporaire à la grille.
+    """
+        nouvelle_fumee = Fumee(x, y, duree)  # La durée est définie directement dans le constructeur
         self.grille.append(nouvelle_fumee)
+
       
     def mettre_a_jour_fumees(self):
         """
@@ -75,16 +75,31 @@ class Grille:
         
         
     def draw_grille(self, game):
-        
-        for selected_case in self.grille :
-            selected_case.draw_case(game)
-            
+        """
+    Affiche la grille avec les cases de terrain, unités et fumées dans le bon ordre.
+    """
+    # 1. Dessiner les cases normales (terrain, mur, rivière)
+        for selected_case in self.grille:
+            if not isinstance(selected_case, Fumee):  # Ignore les fumées ici
+                selected_case.draw_case(game)
+
+    # 2. Dessiner les unités
+        for unit in game.player_1_units + game.player_2_units:
+            unit.draw(game.screen, self.grille, game.pos_unit)
+
+    # 3. Dessiner les fumées par-dessus
+        for selected_case in self.grille:
+            if isinstance(selected_case, Fumee):  # Dessiner les fumées après les unités
+                selected_case.draw_case(game)
+
+    # 4. Dessiner les lignes de la grille
         for x in range(0, self.width, CELL_SIZE):
             for y in range(0, self.height, CELL_SIZE):
                 rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
                 pygame.draw.rect(game.screen, WHITE, rect, 1)
-            
+
         pygame.display.flip()
+
 
 
 

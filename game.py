@@ -36,7 +36,7 @@ class Game:
             La surface de la fenêtre du jeu.
         """
         self.screen = screen
-        self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
+        self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
 
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
@@ -48,8 +48,8 @@ class Game:
         self.menu = Menu_Lateral()
         self.messages = []
         
-        self.grille.activer_fumee(3, 10, 100)     
-        self.grille.activer_fumee(3, 4, 100)                      
+        self.grille.activer_fumee(3, 10, 10)     
+        self.grille.activer_fumee(3, 4, 10)                      
         self.grille.mettre_a_jour_fumees()
         
         self.item= Item() #creer les objets magique (Rod of ages)
