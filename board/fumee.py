@@ -22,13 +22,6 @@ class Fumee(Case):
             
             self.est_active=False
             
-    def draw_case(self, game):
-
-    #Dessine la case de fumée à l'écran en utilisant son image.
-
-        image = pygame.image.load(self.image).convert_alpha()
-        image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
-        game.screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))  
 
     
     
