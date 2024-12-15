@@ -1,8 +1,8 @@
 import pygame
 from .case import *
 from constante import *
-
-class fumee(Case):
+from game import *
+class Fumee(Case):
     
     def __init__(self,x,y,duree):
         
@@ -11,6 +11,7 @@ class fumee(Case):
         self.accessible= True
         self.duree=duree #duré pour laquelle, la fumé est active
         self.est_active=True
+        self.is_accessible = True  # Ajout de cet attribut
         
     def temps_restant(self):
         
@@ -21,11 +22,13 @@ class fumee(Case):
             
             self.est_active=False
             
-    def draw_case(self, screen):
-        #Dessine la fumée sur la case.
-        if self.est_active:
-            image = pygame.image.load(self.image).convert_alpha()
-            image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
-            screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))
+    def draw_case(self, game):
+
+    #Dessine la case de fumée à l'écran en utilisant son image.
+
+        image = pygame.image.load(self.image).convert_alpha()
+        image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
+        game.screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))  # Utilisation correcte
+
     
     

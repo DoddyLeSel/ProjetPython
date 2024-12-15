@@ -41,6 +41,9 @@ class Game:
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
+        self.grille.activer_fumee(10, 10, 100)  # Active une fumée sur la case (3, 10) pendant 100 tours
+        self.grille.activer_fumee(11, 10, 100)   # Active une fumée sur la case (3, 4) pendant 100 tours
+
 
         self.grille.activer_fumee(3, 10, 100)
 
@@ -150,6 +153,8 @@ class Game:
                                 selected_unit.mouvement = False #reinit la touche P
                                 selected_unit.reinitialiser_PM() #reinit les valeurs des PM et les modifier si y a eu un passage par une riviere
                                 selected_unit.fin_boost()
+             # Mettre à jour les fumées après chaque tour complet
+        self.grille.mettre_a_jour_fumees()
     
                                 
                                   

@@ -52,30 +52,26 @@ class Grille:
         return grille
     
     def activer_fumee(self, x, y, duree):
-        for fumee in self.fumees:
-            fumee.temps_restant()  #appel  de fumée
-            
-        # Filtrer les fumées pour ne garder que celles qui sont actives
-            """Ajoute une zone de fumée à la grille."""
-            print(f"Ajout de la fumée aux coordonnées : ({x}, {y})")
-            nouvelle_fumee = fumee(x, y, duree)
-            self.fumees.append(nouvelle_fumee)
-        self.fumees = [fumee for fumee in self.fumees if fumee.is_active()]
-        
-    
+        """
+        Ajoute une fumée temporaire à la grille.
+        """
+        nouvelle_fumee = Fumee(x, y,duree)
+        nouvelle_fumee.duree = duree  # Définit la durée de la fumée
+        self.grille.append(nouvelle_fumee)
+      
     def mettre_a_jour_fumees(self):
-    # Décrémente la durée de chaque fumée et supprime celles qui sont expirées.
-        for fumee in self.fumees:
-            fumee.temps_restant()  # Met à jour la durée de chaque fumée
-        
-    # Supprimer les fumées expirées
-        self.fumees = [fumee for fumee in self.fumees if fumee.est_active]
-
-        
-    def draw_fumees(self, screen):
-       # Dessine toutes les fumées actives sur la grille.
-        for fumee in self.fumees:
-            fumee.draw_case(screen)
+        """
+        Met à jour les fumées en réduisant leur durée et en les supprimant si elles disparaissent.
+        """
+        fumee_a_supprimer = []
+        for case in self.grille:
+            if isinstance(case, Fumee):
+                case.duree -= 1
+                if case.duree <= 0:
+                    fumee_a_supprimer.append(case)
+        for fumee in fumee_a_supprimer:
+            self.grille.remove(fumee)
+    
         
         
     def draw_grille(self, game):
