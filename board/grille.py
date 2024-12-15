@@ -12,9 +12,11 @@ class Grille:
         self.width = CELL_SIZE * GRID_SIZE 
         self.height = CELL_SIZE * GRID_SIZE 
         self.grille = self.grille_init()
+
         self.fumees = []
         self.tableau = []
-
+        
+        
     def grille_init(self):
         
         self.tableau = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],      # 1 pour Terrain
@@ -48,6 +50,7 @@ class Grille:
                 elif self.tableau[i][j] == 3:
                     grille.append(Riviere(j,i))
 
+
         
         return grille
     
@@ -72,8 +75,7 @@ class Grille:
         for fumee in fumee_a_supprimer:
             self.grille.remove(fumee)
     
-        
-        
+                
     def draw_grille(self, game):
         """
     Affiche la grille avec les cases de terrain, unités et fumées dans le bon ordre.

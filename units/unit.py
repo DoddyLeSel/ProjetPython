@@ -1,5 +1,6 @@
 import pygame
 import random
+
 from constante import *
 from abc import ABC, abstractmethod
 from cursor import *
@@ -133,6 +134,8 @@ class Unit(ABC):
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
             self.y = self.y_PM
+        # Appel de la méthode pour vérifier si l'unité se trouve sur une case Domag
+            self.game.grille.cas_domage(self)
     
         #reinitialiser les listes des posistions une fois le perso a changé de place
         self.positions = []
@@ -205,9 +208,9 @@ class Unit(ABC):
 
     def draw(self, screen, grille, pos_unit):
 
-        """
-    Dessine l'unité uniquement si elle n'est pas recouverte par une fumée.
-    """
+        
+    #Dessine l'unité uniquement si elle n'est pas recouverte par une fumée.
+    
     # Vérifie si une fumée recouvre cette unité
         for case in grille:
             if isinstance(case, Fumee) and case.x == self.x and case.y == self.y:

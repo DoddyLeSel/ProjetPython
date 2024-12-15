@@ -7,7 +7,7 @@ from board import *
 from constante import *
 from menu_lateral import *
 
-from trap import *
+
 from item import*
 
 class Game:
@@ -37,15 +37,15 @@ class Game:
         """
         self.screen = screen
 
-        self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
+        self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8, 1, 'player_1')]
 
-        self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
+        self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7, 14, 'player_2'), MissFortune(8, 14, 'player_2')]
 
         self.grille = Grille()
         
         self.menu = Menu_Lateral()
         self.messages = []
-        
+
         self.grille.activer_fumee(10, 7, 3)  # Active une fumée sur la case (10, 10) pendant 3 tours
         self.grille.activer_fumee(11, 7, 3)   # Active une fumée sur la case (11, 10) pendant 3 tours        
         self.grille.activer_fumee(5, 10, 10)     
@@ -212,7 +212,8 @@ class Game:
                 pygame.draw.rect(self.screen, YELLOW, (unit.x * CELL_SIZE,unit.y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
                 
             unit.draw(self.screen,self.grille.grille,self.pos_unit)
-            
+
+
     def unit_remove(self):
         
         font = pygame.font.Font(None, 200)
