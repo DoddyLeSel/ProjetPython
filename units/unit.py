@@ -204,7 +204,7 @@ class Unit(ABC):
 
 
     def draw(self, screen, grille, pos_unit):
-<<<<<<< HEAD
+
         """
     Dessine l'unité uniquement si elle n'est pas recouverte par une fumée.
     """
@@ -218,7 +218,7 @@ class Unit(ABC):
             self.draw_PM(screen, grille, pos_unit)
 
     # Affiche l'image de l'unité
-=======
+
         
         #Affiche l'unité sur l'écran
     
@@ -228,7 +228,7 @@ class Unit(ABC):
             self.draw_PM(screen, grille, pos_unit)
         
         #Affiche l'image de l'unité
->>>>>>> 7efdbe7e0cb59f6763a6b7c2516a3b19fbff20fc
+
         image = pygame.image.load(self.image).convert_alpha()
         image = pygame.transform.scale(image, (CELL_SIZE, CELL_SIZE))
         screen.blit(image, (self.x * CELL_SIZE, self.y * CELL_SIZE))

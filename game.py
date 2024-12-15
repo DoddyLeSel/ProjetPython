@@ -36,17 +36,17 @@ class Game:
             La surface de la fenêtre du jeu.
         """
         self.screen = screen
-<<<<<<< HEAD
+
         self.player_1_units = [Warwick(6, 1, 'player_1'), Xerath(7,1, 'player_1'), MissFortune(8,1, 'player_1')]
-=======
+
         self.player_1_units = [Warwick(6, 13, 'player_1'), Xerath(7,13, 'player_1'), MissFortune(8,13, 'player_1')]
->>>>>>> 7efdbe7e0cb59f6763a6b7c2516a3b19fbff20fc
+
 
         self.player_2_units = [Warwick(6, 14, 'player_2'), Xerath(7,14, 'player_2'), MissFortune(8,14, 'player_2')]
 
         self.grille = Grille()
-        self.grille.activer_fumee(10, 10, 100)  # Active une fumée sur la case (3, 10) pendant 100 tours
-        self.grille.activer_fumee(11, 10, 100)   # Active une fumée sur la case (3, 4) pendant 100 tours
+        self.grille.activer_fumee(10, 10, 3)  # Active une fumée sur la case (10, 10) pendant 3 tours
+        self.grille.activer_fumee(11, 10, 3)   # Active une fumée sur la case (11, 10) pendant 3 tours
 
 
         self.menu = Menu_Lateral()
@@ -179,7 +179,7 @@ class Game:
                                 selected_unit.fin_boost()            #Met fin aux boost de PM et d'attaque à la fin du tour
                                 
         # Mettre à jour les fumées après chaque tour complet
-        self.grille.mettre_a_jour_fumees()
+            self.grille.mettre_a_jour_fumees()
     
                                 
                                   
