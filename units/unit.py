@@ -134,8 +134,7 @@ class Unit(ABC):
         if 0 <= self.x_PM< GRID_SIZE and 0 <= self.y_PM < GRID_SIZE:
             self.x = self.x_PM   #la derniere coord du rect jaune
             self.y = self.y_PM
-        # Appel de la méthode pour vérifier si l'unité se trouve sur une case Domag
-            self.game.grille.cas_domage(self)
+
     
         #reinitialiser les listes des posistions une fois le perso a changé de place
         self.positions = []
